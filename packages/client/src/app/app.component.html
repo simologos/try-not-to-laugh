@@ -1,0 +1,19 @@
+<div style="font-size: 80px; top: 0; position:absolute;">😂</div>
+
+<div style="margin-top: 32px;" class="container-fluid header">
+  <div class="row" style="margin-left: 20px;">
+    <div class="col-md-8">
+      <span class="title">Try Not To Laugh</span>
+    </div>
+    <div class="col-md-4" class="navigation">
+      <ul>
+        <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+        <li><a routerLink="/lobby" routerLinkActive="active">Create Lobby</a></li>
+        <li><a (click)="logout()" routerLinkActive="active">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="content container-fluid">
+  <router-outlet></router-outlet>
+</div>

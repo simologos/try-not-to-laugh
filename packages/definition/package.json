@@ -1,0 +1,17 @@
+{
+  "name": "@tntl/definition",
+  "version": "1.0.0",
+  "description": "Try not to laugh Type Script definitions",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:ts",
+    "build:ts": "tsc -b .",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "generate:sourcedoc": "typedoc --hideProjectName true --hideBreadcrumbs true --plugin typedoc-plugin-markdown"
+  },
+  "author": "Christian Egli, Simon Egli",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.0.3"
+  }
+}

@@ -1,0 +1,20 @@
+<!--<webcam (initError)="handleInitError($event)"
+        style="margin:0 auto; width: 400px; height: 400px; max-width: 400px; max-height: 250px; background-color: black;">
+
+</webcam>
+<webcam id="video" [allowCameraSwitch]="false" (initError)="handleInitError($event)"></webcam>
+
+<video #video autoplay="true" id="video" style="
+	width: 500px;
+	height: 375px;
+	background-color: #666;"></video>
+
+-->
+
+<h2>Calibrate your webcam
+  <span *ngIf="this.expressions.faceLost > 0" style="color: red;">🛑</span>
+  <span *ngIf="!this.expressions.faceLost" style="color: green;">🟢</span>
+  <span *ngIf="this.expressions.laughDetected > 0" style="">😂</span>
+  <span *ngIf="!this.expressions.faceLost && !this.expressions.laughDetected" style="">😐</span>
+</h2>
+<webcam id="video" [allowCameraSwitch]="false" (initError)="handleInitError($event)"></webcam>

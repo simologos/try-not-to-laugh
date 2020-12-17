@@ -1,0 +1,16 @@
+<div style="text-align: center">
+<h2>Prepare for Round 1 - you are {{state}}</h2>
+
+  <div *ngIf="state == 'not ready'">
+  <p>Please insert your first Youtube Video URL</p>
+  URL: <input type="url" [(ngModel)]="url" />
+  Title: <input [(ngModel)]="title" />
+  <button (click)="upload()">Submit</button>
+  </div>
+  <div *ngIf="state == 'ready'">
+    <p>Your video {{title}} was added to the round queue</p>
+    <p>Please wait while other players are still setting up...</p>
+  </div>
+<div class="row">
+</div>
+</div>

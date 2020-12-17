@@ -1,0 +1,15 @@
+export interface IVideo {
+
+  addedBy: string;
+
+  checkpoints: [];
+
+  createdAt: number;
+
+  name: string;
+
+  url: string;
+
+  start: number;
+
+}
