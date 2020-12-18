@@ -7,7 +7,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap --use-workspaces",
     "start": "lerna run start --parallel --stream",
-    "build": "lerna run build",
+    "build": "lerna run build --stream",
     "clean": "npm-run-all clean:*",
     "lint": "eslint packages",
     "lint:fix": "eslint packages --fix",

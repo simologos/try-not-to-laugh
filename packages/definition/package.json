@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build:ts",
-    "build:ts": "tsc -b .",
+    "build:ts": "tsc -b . --verbose",
     "clean": "rm -rf dist *.tsbuildinfo",
     "generate:sourcedoc": "typedoc --hideProjectName true --hideBreadcrumbs true --plugin typedoc-plugin-markdown"
   },
