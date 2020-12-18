@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "build": "npm run build:ts",
-    "build:ts": "tsc -b .",
+    "build:ts": "tsc -b . --extendedDiagnostics --traceResolution",
     "clean": "rimraf dist/*"
   },
   "author": "Christian Egli, Simon Egli",
