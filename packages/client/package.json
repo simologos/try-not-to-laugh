@@ -4,7 +4,6 @@
   "description": "Try not to laugh client",
   "author": "Christian Egli, Simon Egli",
   "license": "MIT",
-
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o --proxy-config proxy.conf.json",
@@ -24,9 +23,7 @@
     "@angular/platform-browser": "~11.0.4",
     "@angular/platform-browser-dynamic": "~11.0.4",
     "@angular/router": "~11.0.4",
-    "rxjs": "~6.6.0",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.10.2",
+    "@angular/youtube-player": "^11.0.3",
     "@tensorflow/tfjs-node": "^2.7.0",
     "@types/babel__core": "^7.1.10",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
@@ -38,9 +35,18 @@
     "ng-bootstrap": "^1.6.3",
     "ngx-socket-io": "^3.2.0",
     "ngx-webcam": "^0.3.2",
-    "uuid": "^8.3.1"
+    "rxjs": "~6.6.0",
+    "tslib": "^2.0.0",
+    "uuid": "^8.3.1",
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "~0.1100.4",
+    "@angular/cli": "~11.0.4",
+    "@angular/compiler-cli": "~11.0.4",
+    "@types/jasmine": "~3.6.0",
+    "@types/node": "^12.11.1",
+    "codelyzer": "^6.0.0",
     "eslint": "^7.9.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-typescript": "^10.0.0",
@@ -51,24 +57,18 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.2",
-    "jest": "^26.4.2",
-    "prettier": "^2.1.2",
-    "typescript": "4.0.3",
-    "@angular-devkit/build-angular": "~0.1100.4",
-    "@angular/cli": "~11.0.4",
-    "@angular/compiler-cli": "~11.0.4",
-    "@types/jasmine": "~3.6.0",
-    "@types/node": "^12.11.1",
-    "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
+    "jest": "^26.4.2",
     "karma": "~5.1.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "prettier": "^2.1.2",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0"
+    "tslint": "~6.1.0",
+    "typescript": "4.0.3"
   }
 }
