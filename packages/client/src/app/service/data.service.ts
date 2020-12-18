@@ -28,8 +28,6 @@ export class DataService {
 
   currentRound = 0;
 
-  currentRoundPlayersReady = false;
-
   state = 0;
 
   playerCount = 0;
@@ -40,7 +38,7 @@ export class DataService {
 
   players: IUser[] = [];
 
-  checkpoints: any[] = [];
+  checkpoints = new Map();
 
   currentRoundSubject: Subject<number> = new Subject();
 
@@ -53,6 +51,7 @@ export class DataService {
   playlistSubject: Subject<any[]> = new Subject();
 
   constructor(private socket: Socket, private gameService: GameService, private http: HttpClient, private router: Router) {
+
     socket.on('connect', (data: any) => {
       console.log(data);
     });
@@ -60,26 +59,14 @@ export class DataService {
     socket.on('event', (event: any, data: any) => {
       switch (event.type) {
         case 'ON_GAME_ADDED':
-          const game: IGame = event.payload;
-          this.gameId = game.id;
-          this.gameIdSubject.next(this.gameId);
-          this.currentRound = game.currentRound;
-          this.currentRoundSubject.next(this.currentRound);
-          this.state = game.state;
-          this.chat = game.chat;
-          this.playlist = game.playlist;
-          this.players = game.players;
-          this.playerCount = game.players.length;
-
+          this.gameId = event.payload.id;
+          this.players = [];
           this.joinGame(this.gameId);
+          this.fetch();
 
           break;
         case 'ON_GAME_JOINED':
-          const { user } = event.payload;
-          this.players.push(user);
-          this.playerCount = this.players.length;
-          this.playersSubject.next(this.players);
-          this.gameIdSubject.next(event.payload.gameId);
+          this.fetch();
           break;
 
         case 'ON_CHAT_MESSAGE_SENT':
@@ -97,6 +84,9 @@ export class DataService {
 
           this.playlist.push(video);
           this.playlistSubject.next(this.playlist);
+
+          this.fetch();
+
           break;
 
         case 'ON_GAME_STATE_CHANGED':
@@ -110,7 +100,6 @@ export class DataService {
 
         case 'ON_NEXT_ROUND_STARTED':
 
-          console.log(event.payload);
           this.playlist = [];
           this.playlistSubject.next(this.playlist);
           this.fetch();
@@ -124,7 +113,6 @@ export class DataService {
           break;
       }
       console.log(event);
-      console.log(data);
     });
 
     socket.on('error', () => {
@@ -152,23 +140,35 @@ export class DataService {
 
   public loadGame(id: string, join: boolean): void {
     this.http.get<any>(`http://localhost:8080/v1/games/${id}`).subscribe((game) => {
-      console.log(game);
-
       this.players = game.players;
       this.playersSubject.next(this.players);
       this.gameId = id;
       this.gameIdSubject.next(id);
       this.chat = game.chat;
       this.chatSubject.next(this.chat);
+      this.currentRound = game.currentRound;
+      this.playerCount = game.players.length;
 
-      this.playlist = game.playlist[this.currentRound];
+      this.playlist = game.playlist;
       this.playlistSubject.next(this.playlist);
 
-      // this.checkpoints = game.checkpoints.filter((c) => c.userId === this.userId);
+      console.log(this.playlist);
 
       if (join) {
         this.joinGame(this.gameId);
       }
+
+      if (!this.playlist || this.playlist.length === 0) {
+        return;
+      }
+
+      this.playlist.forEach(p => {
+        const filtered = p.checkpoints.filter((c: any) => c.userId === this.userId);
+
+        if (filtered && filtered[0]) {
+          this.checkpoints.set(p._id, filtered[0]);
+        }
+      })
     },
     (err: any) => console.error(err));
   }
@@ -182,7 +182,14 @@ export class DataService {
   }
 
   public joinGame(id: string): any {
+    this.whoAmI();
+    this.gameId = id;
     return this.http.post<any>(`http://localhost:8080/v1/games/${id}/players`, '').subscribe();
+  }
+
+  public whoAmI(): void {
+    this.http.get<any>('http://localhost:8080/v1/users/me')
+    .subscribe((res: any) => this.userId = res.id);
   }
 
   public createGame(): void {
@@ -197,9 +204,14 @@ export class DataService {
     this.http.post<any>(`http://localhost:8080/v1/games/${this.gameId}/chats`, message).subscribe();
   }
 
-  public nextRound() {
-    this.playlist = [];
-    this.playlistSubject.next([]);
+  public checkpoint(videoId: string, data: any): Observable<any> {
+    const checkpointId = this.checkpoints.get(videoId)._id;
+    return this.http.put<any>(`http://localhost:8080/v1/games/${this.gameId}/playlist/${videoId}/${checkpointId}`, data);
+  }
+
+  public nextRound(): void {
+    //this.playlist = [];
+    //this.playlistSubject.next([]);
   }
 
   public leaveGame(): void {

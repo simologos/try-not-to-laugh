@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { YouTubePlayer } from '@angular/youtube-player';
-import { Observable } from 'rxjs';
 import { DataService } from '../service/data.service';
 import { GameService } from '../service/game.service';
 import { WebcamComponent } from '../webcam/webcam.component';
-import { IPlayListItem } from '../_models/IPlayListItem';
 
 @Component({
   selector: 'app-round',
@@ -21,6 +19,7 @@ export class RoundComponent implements OnInit {
   playerOptions: any;
 
   current = {
+    id: '',
     url: '',
     name: '',
     start: 0,
@@ -58,13 +57,23 @@ export class RoundComponent implements OnInit {
   }
 
   onFail(data: any): void {
+    this.cam?.untrack();
     this.checkpoint(data);
-    console.error(data);
   }
 
-  checkpoint(data: any): void {
-    // TODO
-    this.loadNext();
+  checkpoint(expressions: any): void {
+
+    const data = {
+      userId: this.dataService.userId,
+      state: 2,
+      laughed: expressions.laughDetected === 1 || expressions.faceLost === 1 ? 1 : 0,
+    }
+
+    this.dataService.checkpoint(this.current.id, data).subscribe(
+      () => this.loadNext(),
+      () => this.loadNext(),
+    );
+
   }
 
   loadNext(): void {
@@ -76,7 +85,17 @@ export class RoundComponent implements OnInit {
   setVideoData(): any {
     const video = this.videosToPlay[this.index];
 
+    console.log(video);
+
+    if (!video) {
+      // TODO ROUND FINISHED
+      alert('round finished');
+      return;
+    }
+
+
     this.current = {
+      id: video._id,
       name: video.name,
       url: this.getVideoId(video.url),
       start: video.start,
