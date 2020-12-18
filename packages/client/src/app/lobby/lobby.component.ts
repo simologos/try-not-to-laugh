@@ -41,7 +41,7 @@ export class LobbyComponent implements OnInit {
   public startEnabled(): boolean {
 
     if (!this.dataService.players) {
-      return;
+      return false;
     }
 
     return this.dataService.players.length >= 2 && this.dataService.players.length <= 4;
