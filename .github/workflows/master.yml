@@ -1,10 +1,15 @@
 # This workflow is used to validate the Master branch and trigger a release.
 
-name: Master
+name: Build and Deploy to Cloud Run
 on:
   push:
     # Trigger the workflow on push events to the master branch
-    branches: [ master ]
+    branches: [master]
+
+env:
+  PROJECT_ID: ${{ secrets.RUN_PROJECT }}
+  RUN_REGION: europe-west6
+  SERVICE_NAME: tntl
 
 # Define one job, in which all steps are executed serially.
 jobs:
@@ -16,27 +21,49 @@ jobs:
     strategy:
       matrix:
         # Only run the 12.x build
-        node-version: [12.x] 
+        node-version: [12.x]
 
     steps:
+      # First, checkout the repository
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
 
-    # First, checkout the repository
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+        # Then, setup node, with the defined version from above
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    # Then, setup node, with the defined version from above
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      # Install yarn globally, so we can use the yarn lockfile
+      - run: npm install -g yarn
+      # Lint the source code with ESLint.
+      - name: Lint source code using eslint.
+        run: |
+          yarn install --frozen-lockfile
+          yarn bootstrap
+          yarn build
 
-    # Install yarn globally, so we can use the yarn lockfile
-    - run: npm install -g yarn   
-    # Lint the source code with ESLint.
-    - name: Lint source code using eslint.
-      run: |
-        yarn install --frozen-lockfile
-        yarn bootstrap
-        yarn build
+      # Setup gcloud CLI
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: "290.0.1"
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          project_id: ${{ secrets.RUN_PROJECT }}
+
+      # Build and push image to Google Container Registry
+      - name: Build
+        run: |-
+          gcloud builds submit \
+            --quiet \
+            --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
+      # Deploy image to Cloud Run
+      - name: Deploy
+        run: |-
+          gcloud run deploy "$SERVICE_NAME" \
+            --quiet \
+            --region "$RUN_REGION" \
+            --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+            --platform "managed" \
+            --allow-unauthenticated
     #     yarn lint
     # # Execute unit tests using jest.
     # - name: Execute low level unit tests.
