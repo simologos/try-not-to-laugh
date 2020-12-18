@@ -1,14 +1,13 @@
 import { Schema, Types } from "mongoose";
-import SchemaNames from "@tntl/server/src/_definition/schemaNames";
 
 const checkpoint = new Schema({
-  userId: { type: Types.ObjectId, required: true, ref: SchemaNames.User },
+  userId: { type: Types.ObjectId, required: true, ref: 'user' },
   state: { type: Number, required: true },
   laughed: { type: Boolean, required: true }
 }, { _id: true });
 
 const playList = new Schema({
-  addedBy: { type: Types.ObjectId, required: true, ref: SchemaNames.User },
+  addedBy: { type: Types.ObjectId, required: true, ref:'user' },
   name: { type: String, required: true },
   url: { type: String, required: true },
   start: { type: Number, required: true },
@@ -17,14 +16,14 @@ const playList = new Schema({
 }, { _id: true });
 
 const chatList = new Schema({
-  sender: { type: Types.ObjectId, required: true, ref: SchemaNames.User },
+  sender: { type: Types.ObjectId, required: true, ref: 'user' },
   message: { type: String, required: true },
   createdAt: { type: Number, required: true },
 }, { _id: true });
 
 const schema = new Schema({
   state: { type: Number, required: true },
-  players: [{ type: Types.ObjectId, ref: SchemaNames.User }],
+  players: [{ type: Types.ObjectId, ref: 'user' }],
   chat: [chatList],
   playlist: [playList],
   currentRound: { type: Number, required: true }
