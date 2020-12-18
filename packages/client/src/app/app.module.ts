@@ -15,6 +15,10 @@ import {WebcamModule} from 'ngx-webcam';
 import { ChatComponent } from './chat/chat.component';
 import {FormsModule} from '@angular/forms';
 import { VideoComponent } from './video/video.component';
+import { RoundPrepareComponent } from './round-prepare/round-prepare.component';
+import { RoundComponent } from './round/round.component';
+import { PlayersComponent } from './players/players.component';
+import {YouTubePlayerModule} from "@angular/youtube-player";
 
 const config: SocketIoConfig = { url: 'http://localhost:8000/notification', options: {} };
 
@@ -27,7 +31,10 @@ const config: SocketIoConfig = { url: 'http://localhost:8000/notification', opti
     LobbyComponent,
     WebcamComponent,
     ChatComponent,
-    VideoComponent
+    VideoComponent,
+    RoundPrepareComponent,
+    RoundComponent,
+    PlayersComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +43,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8000/notification', opti
     WebcamModule,
     SocketIoModule.forRoot(config),
     FormsModule,
+    YouTubePlayerModule,
   ],
   providers: [    {
     provide: HTTP_INTERCEPTORS,

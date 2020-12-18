@@ -1,16 +1,26 @@
-<div style="text-align: center">
-<h2>Prepare for Round 1 - you are {{state}}</h2>
+<ng-container *ngIf="!roundReady">
 
-  <div *ngIf="state == 'not ready'">
-  <p>Please insert your first Youtube Video URL</p>
-  URL: <input type="url" [(ngModel)]="url" />
-  Title: <input [(ngModel)]="title" />
-  <button (click)="upload()">Submit</button>
+  <div style="text-align: center">
+  <h2>Prepare for Round {{currentRound + 1}} - you are {{playerReady ? 'ready' : 'not ready'}}</h2>
+
+    <div *ngIf="!playerReady">
+
+      <app-round-prepare (submitted)="videoSubmitted($event)"></app-round-prepare>
+
+    </div>
+    <div *ngIf="playerReady">
+      <p>Your video was added to the round queue</p>
+      <p>Please wait while other players are still setting up...</p>
+    </div>
+  <div class="row">
   </div>
-  <div *ngIf="state == 'ready'">
-    <p>Your video {{title}} was added to the round queue</p>
-    <p>Please wait while other players are still setting up...</p>
   </div>
-<div class="row">
-</div>
-</div>
+</ng-container>
+
+
+<ng-container *ngIf="roundReady">
+  <app-round #round></app-round>
+</ng-container>
+
+<app-chat></app-chat>
+

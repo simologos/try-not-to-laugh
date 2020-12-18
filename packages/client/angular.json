@@ -20,12 +20,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "/",
+            "deployUrl": "/",
             "outputPath": "dist/client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -128,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "client"
+  "defaultProject": "client",
+  "cli": {
+    "analytics": false
+  }
 }

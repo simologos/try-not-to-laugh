@@ -13,19 +13,18 @@ import {IUser} from '../_models/IUser';
 export class LobbyComponent implements OnInit {
 
   players$: Observable<IUser[]> | undefined;
-  public base = 'http://localhost:4200/lobby/';
+  public base = 'http://localhost:8080/#/lobby/';
   public lobbylink = 'init a game first';
   public id: string = '';
 
-  constructor(private route: ActivatedRoute, private dataService: DataService, private gameService: GameService) {
+  constructor(private route: ActivatedRoute, private dataService: DataService) {
 
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params.id;
-      this.dataService.loadGame(this.id);
-      this.gameService.joinGame(this.id);
+      this.dataService.loadGame(this.id, true);
     });
 
     this.players$ = this.dataService.playersSubject;
@@ -36,17 +35,8 @@ export class LobbyComponent implements OnInit {
   }
 
   public initGame(): void {
-    this.gameService.createGame();
+    this.dataService.createGame();
     this.players$ = this.dataService.playersSubject;
-
-    /*this.dataService.getGameId().subscribe(v => {
-      if (v === undefined) {
-        return;
-      }
-      this.id = v;
-      this.gameService.joinGame(this.id);
-    });*/
-
   }
 
   public startEnabled(): boolean {
@@ -54,7 +44,7 @@ export class LobbyComponent implements OnInit {
   }
 
   public startGame(): void {
-
+    this.dataService.updateState(1);
   }
 
   public leaveGame(): void {
