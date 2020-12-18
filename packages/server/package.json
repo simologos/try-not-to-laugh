@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.ts",
+    "exec": "ts-node src/index.ts",
     "build": "npm run build:ts",
     "build:ts": "tsc -b .",
     "clean": "rimraf dist/*"
