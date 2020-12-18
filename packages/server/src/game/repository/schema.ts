@@ -1,5 +1,5 @@
 import { Schema, Types } from "mongoose";
-import SchemaNames from "../../_definition/schemaNames";
+import SchemaNames from "@tntl/server/src/_definition/schemaNames";
 
 const checkpoint = new Schema({
   userId: { type: Types.ObjectId, required: true, ref: SchemaNames.User },
