@@ -18,7 +18,6 @@ export class LobbyComponent implements OnInit {
   public id: string = '';
 
   constructor(private route: ActivatedRoute, private dataService: DataService) {
-
   }
 
   ngOnInit(): void {
@@ -40,6 +39,11 @@ export class LobbyComponent implements OnInit {
   }
 
   public startEnabled(): boolean {
+
+    if (!this.dataService.players) {
+      return;
+    }
+
     return this.dataService.players.length >= 2 && this.dataService.players.length <= 4;
   }
 

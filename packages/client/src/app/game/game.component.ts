@@ -44,7 +44,7 @@ export class GameComponent implements OnInit {
 
     this.playlist$.subscribe(v => {
       if (v && v.length === 2) {
-        this.dataService.fetch();
+        //this.dataService.fetch();
         this.roundReady = true;
       }
     });

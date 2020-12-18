@@ -4,7 +4,6 @@
   "description": "Try not to laugh client",
   "author": "Christian Egli, Simon Egli",
   "license": "MIT",
-
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o --proxy-config proxy.conf.json",
@@ -24,9 +23,7 @@
     "@angular/platform-browser": "~11.0.4",
     "@angular/platform-browser-dynamic": "~11.0.4",
     "@angular/router": "~11.0.4",
-    "rxjs": "~6.6.0",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.10.2",
+    "@angular/youtube-player": "^11.0.3",
     "@tensorflow/tfjs-node": "^2.7.0",
     "@types/babel__core": "^7.1.10",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
@@ -38,7 +35,10 @@
     "ng-bootstrap": "^1.6.3",
     "ngx-socket-io": "^3.2.0",
     "ngx-webcam": "^0.3.2",
-    "uuid": "^8.3.1"
+    "rxjs": "~6.6.0",
+    "tslib": "^2.0.0",
+    "uuid": "^8.3.1",
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "eslint": "^7.9.0",
