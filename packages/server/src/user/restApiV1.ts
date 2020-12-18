@@ -1,4 +1,4 @@
-import { Express } from "express";
+import { Express, Request, Response } from "express";
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import { cookieKey, serverSubmitterId, sessionSecret } from "../config";
@@ -6,8 +6,7 @@ import { use, serializeUser, deserializeUser, authenticate, initialize } from "p
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as CustomStrategy } from 'passport-custom';
 import { authClientId, authClientSecret } from "../config";
-import IUser from "@tntl/definition/src/user/IUser";
-import IIdentifier from "@tntl/definition/src/generic/IIdentifier";
+import { StatusCodes } from 'http-status-codes';
 import { getMongooseConnection } from "../mongoose";
 import { getUserByGoogleId, getUserById } from "./queries/user";
 import { registerAddUserHandler } from "./commandHandlers/addUserHandler";
@@ -18,6 +17,8 @@ import { Event } from "../_definition/events/Event";
 import { isType } from "../_definition/isType";
 import { onUserAdded } from "./events";
 import { publishCommand } from "../commandPublisher";
+import { isAuthenticated } from "../_middleware/authMiddleware";
+import bodyParser from "body-parser";
 
 use(
   new GoogleStrategy(
@@ -82,7 +83,7 @@ use(new CustomStrategy(
       }
     });
 
-    publishCommand(command);   
+    publishCommand(command);
   }
 ));
 
@@ -104,6 +105,7 @@ deserializeUser((id: string, done) => {
 export const registerRestEndpoints = (app: Express, socketNs: SocketIO.Namespace) => {
 
   const MongoStore = connectMongo(session);
+  const jsonParser = bodyParser.json()
 
   const sessionMiddleware = session({
     store: new MongoStore({
@@ -138,6 +140,26 @@ export const registerRestEndpoints = (app: Express, socketNs: SocketIO.Namespace
   app.get('/auth/anonymous', authenticate('custom', { failureRedirect: '/' }), (req, res) => {
     res.redirect('/');
   });
+
+  app.get(
+    '/v1/users/me',
+    isAuthenticated,
+    jsonParser,
+    async (req: Request, res: Response) => {
+
+      res.setHeader('Content-Type', 'application/json');
+
+      // @ts-ignore
+      const result = await getUserById(req.session.passport.user);
+
+      if (result.success) {
+        res.status(StatusCodes.OK)
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+      }
+
+      res.end(JSON.stringify(result));
+    });
 };
 
 const initModule = (app: Express, socketNs: SocketIO.Namespace) => {

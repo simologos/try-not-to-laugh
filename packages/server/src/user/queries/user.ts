@@ -1,12 +1,15 @@
 import IIdentifier from "@tntl/definition/src/generic/IIdentifier";
 import IUser from "@tntl/definition/src/user/IUser";
+import IError from "definition/src/generic/IError";
+import IResponse from "definition/src/generic/IResponse";
 import { userModel } from "../repository/model";
 
-export const getUserById = async (id: string): Promise<IUser & IIdentifier | null> => {
+export const getUserById = async (id: string): Promise<IResponse & (IUser & IIdentifier | IError)> => {
   try {
     const user = await userModel.findById(id).exec();
 
     return {
+      success: true,
       id: user._id,
       displayName: user.displayName,
       avatar: user.avatar,

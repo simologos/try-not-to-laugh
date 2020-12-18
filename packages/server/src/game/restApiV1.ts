@@ -53,7 +53,7 @@ const registerRestEndpoints = (app: Express) => {
 
     const result = await listGames(parseInt(page, 10) || 0, parseInt(limit, 10) || 10);
 
-    if(result.success) {
+    if (result.success) {
       res.status(StatusCodes.OK)
     } else {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -73,7 +73,7 @@ const registerRestEndpoints = (app: Express) => {
 
       const result = await getGameById(id);
 
-      if(result.success) {
+      if (result.success) {
         res.status(StatusCodes.OK)
       } else {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -263,7 +263,7 @@ const registerRestEndpoints = (app: Express) => {
     }, {}, IChatMessage>, res: Response) => {
 
       const { gameId } = req.params;
-      const { message} = req.body;
+      const { message } = req.body;
 
       publishCommand(sendChatMessage(
         {
