@@ -6,7 +6,7 @@ export const authClientId = '';
 export const authClientSecret = '';
 
 export const cookieKey = 'try_not_to_laugh_auth';
-export const sessionSecret = 'h\'gnwY$0q\C)w|M2ODkP';
+export const sessionSecret = '';
 
 export const maxPlayerPerGame = 4;
 export const minPlayerPerGame = 2;
