@@ -6,7 +6,7 @@
   <br><br>
   <div *ngIf="messages$ | async as messages; else nope">
     <div *ngFor="let message of messages">
-      <b>Christian Egli</b>: {{message.message}}
+      <b>{{message.sender}}</b>: {{message.message}}
     </div>
   </div>
   <ng-template #nope><span>No messages</span></ng-template>

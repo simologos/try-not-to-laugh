@@ -16,7 +16,7 @@ export class ChatComponent implements OnInit {
   messages$: Observable<IChatMessage[]> | undefined;
   currentMessage: string;
 
-  constructor(private dataService: DataService, private gameService: GameService) { 
+  constructor(private dataService: DataService) {
     this.gameId = '';
     this.currentMessage = '';
   }
@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit {
       message: this.currentMessage,
     };
 
-    this.gameService.sendChatMessage(this.gameId, m);
+    this.dataService.sendChatMessage(this.gameId, m);
     this.currentMessage = '';
   }
 

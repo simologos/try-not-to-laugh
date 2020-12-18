@@ -1,0 +1,11 @@
+<button>done</button>
+
+<youtube-player #player
+                [videoId]="current.url"
+                [playerVars]="playerOptions"
+                [startSeconds]="current.start"
+                [endSeconds]="current.start + 30"
+                (stateChange)="state($event)">
+
+</youtube-player>
+<app-webcam #cam (failed)="onFail($event)"></app-webcam>

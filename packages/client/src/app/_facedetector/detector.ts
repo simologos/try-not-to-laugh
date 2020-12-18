@@ -8,8 +8,6 @@ interface IExpression {
 }
 
 const Detector = (props: IDetectorProps) => {
-
-
   const [expressions, setExpressions] = useState({
     // angry: 0,
     // disgusted: 0,
@@ -19,11 +17,10 @@ const Detector = (props: IDetectorProps) => {
     // sad: 0,
     // surprised: 0,
     faceLost: 0,
-    laughDetected: 0
+    laughDetected: 0,
   });
 
   useEffect(() => {
-
     async function loadModels() {
       // @ts-ignore
       await faceapi.nets.tinyFaceDetector.loadFromUri('/static/models');
@@ -40,7 +37,7 @@ const Detector = (props: IDetectorProps) => {
     const interval = setInterval(async () => {
       const detections = await faceapi.detectAllFaces(
         (props.webcamRef.current as any).video,
-        new faceapi.TinyFaceDetectorOptions()
+        new faceapi.TinyFaceDetectorOptions(),
       ).withFaceExpressions();
 
       const faceLost = detections && !detections.length;
@@ -48,7 +45,7 @@ const Detector = (props: IDetectorProps) => {
       const time = new Date().getTime();
 
       const newExpressions = {
-        ...expressions
+        ...expressions,
       };
 
       if (faceLost && !expressions.faceLost) {
@@ -68,7 +65,6 @@ const Detector = (props: IDetectorProps) => {
       }
 
       setExpressions(newExpressions);
-
     }, 200);
 
     return () => clearInterval(interval);

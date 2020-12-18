@@ -17,7 +17,7 @@
 </span></ng-template>
 <br>
 <div style="width: 100%; text-align: center;">
-  <button [routerLink]="['/game', id]" [disabled]="!startEnabled()" class="primary">Start Game</button>
+  <button (click)="startGame()" [disabled]="!startEnabled()" class="primary">Start Game</button>
 <br>
   <div style="text-align: center;">
     <app-chat></app-chat>
