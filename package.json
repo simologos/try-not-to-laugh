@@ -6,9 +6,14 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap --use-workspaces",
+    "postbootstrap": "lerna link",
     "start": "lerna run start --parallel --stream",
     "build": "lerna run build --stream",
-    "clean": "npm-run-all clean:*",
+    "clean": "npm-run-all clean:build-cache clean:build clean:node-modules",
+    "clean:build": "lerna run clean",
+    "clean:build-cache": "rimraf .build-cache",
+    "clean:node-modules": "lerna clean --yes",
+    "ls": "lerna ls",
     "lint": "eslint packages",
     "lint:fix": "eslint packages --fix",
     "jest": "jest"
@@ -31,6 +36,7 @@
     "lerna": "^3.22.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
     "typescript": "^4.0.3"
   },
   "dependencies": {

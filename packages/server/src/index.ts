@@ -5,6 +5,10 @@ import { initUserModule } from "./user/restApiV1";
 import { initLibraryModule } from "./library/restApiV1";
 import { getNamespace, startNotificationServer } from "./notification/socket";
 import { initGameModule } from "./game/restApiV1";
+import path from "path";
+import { port } from "./config";
+
+const staticDir = path.join(path.resolve(__dirname, '..'), 'node_modules/@tntl/client/dist/client');
 
 const startUp = async () => {
 
@@ -15,10 +19,8 @@ const startUp = async () => {
 
   const app = express();
   const server = http.createServer(app);
-
-  app.get('/', (_req: any, res: any) => {
-    res.sendFile(__dirname + '/index.html');
-  });
+  app.set('view engine', 'html');
+  app.use('/', express.static(staticDir));
 
   startNotificationServer(server);
 
@@ -28,8 +30,8 @@ const startUp = async () => {
 
   initGameModule(app);
 
-  server.listen(8000, () => {
-    console.log('listening on *:8000');
+  server.listen(port, () => {
+    console.log(`listening on *:${port}`);
   });
 };
 

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build:ts",
     "build:ts": "tsc -b . --verbose",
-    "clean": "rm -rf dist *.tsbuildinfo",
+    "clean": "rimraf dist/*",
     "generate:sourcedoc": "typedoc --hideProjectName true --hideBreadcrumbs true --plugin typedoc-plugin-markdown"
   },
   "author": "Christian Egli, Simon Egli",
