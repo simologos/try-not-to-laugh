@@ -33,14 +33,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Install yarn globally, so we can use the yarn lockfile
-      - run: npm install -g yarn
-      # Lint the source code with ESLint.
-      - name: Lint source code using eslint.
-        run: |
-          yarn install --frozen-lockfile
-          yarn bootstrap
-          yarn build
+      # # Install yarn globally, so we can use the yarn lockfile
+      # - run: npm install -g yarn
+      # # Lint the source code with ESLint.
+      # - name: Build project.
+      #   run: |
+      #     yarn install --frozen-lockfile
+      #     yarn bootstrap
+      #     yarn build
 
       # Setup gcloud CLI
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -50,7 +50,7 @@ jobs:
           project_id: ${{ secrets.RUN_PROJECT }}
 
       # Build and push image to Google Container Registry
-      - name: Build
+      - name: Build image
         run: |-
           gcloud builds submit \
             --quiet \
