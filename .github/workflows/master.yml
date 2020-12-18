@@ -35,6 +35,8 @@ jobs:
     - name: Lint source code using eslint.
       run: |
         yarn install --frozen-lockfile
+        yarn bootstrap
+        yarn build
     #     yarn lint
     # # Execute unit tests using jest.
     # - name: Execute low level unit tests.
