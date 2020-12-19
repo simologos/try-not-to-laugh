@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DataService} from '../service/data.service';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
-import {IUser} from '../_models/IUser';
+import IUser from '@tntl/definition/src/user/IUser';
 
 @Component({
   selector: 'app-lobby',
@@ -14,7 +14,7 @@ export class LobbyComponent implements OnInit {
   players$: Observable<IUser[]> | undefined;
   public base = '/#/lobby/';
   public lobbylink = 'init a game first';
-  public id: string = '';
+  public id = '';
 
   constructor(private route: ActivatedRoute, private dataService: DataService) {
   }

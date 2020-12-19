@@ -15,7 +15,7 @@ export class WebcamComponent implements AfterViewInit {
   @Output()
   failed: EventEmitter<any> = new EventEmitter();
 
-  public state: string = '';
+  public state = '';
 
   public interval: any;
 

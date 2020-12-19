@@ -27,7 +27,7 @@ export class RoundComponent implements OnInit {
     start: 0,
   };
 
-  index: number = 0;
+  index = 0;
 
   constructor(private dataService: DataService, private gameService: GameService) { }
 
@@ -36,11 +36,11 @@ export class RoundComponent implements OnInit {
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.playerOptions = {
-      'autoplay': 1,
-      'controls': 0,
-      'autohide': 1,
-      'wmode': 'opaque',
-      'origin': window.location.host
+      autoplay: 1,
+      controls: 0,
+      autohide: 1,
+      wmode: 'opaque',
+      origin: window.location.host
     };
 
     this.done = false;
@@ -79,7 +79,7 @@ export class RoundComponent implements OnInit {
       userId: this.dataService.userId,
       state: 2,
       laughed: expressions.laughDetected === 1 || expressions.faceLost === 1 ? 1 : 0,
-    }
+    };
 
     this.dataService.checkpoint(this.current.id, data).subscribe(
       // FIXME WTF?????????

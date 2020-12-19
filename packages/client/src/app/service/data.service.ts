@@ -1,30 +1,21 @@
-import { WebSocketSubject } from 'rxjs/internal-compatibility';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject, EMPTY, Observable, of, Subject,
-} from 'rxjs';
-import {
-  catchError, map, switchAll, tap,
-} from 'rxjs/operators';
-import { webSocket } from 'rxjs/webSocket';
+import { Observable, of, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Socket } from 'ngx-socket-io';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { IGame } from '../_models/IGame';
 import { GameService } from './game.service';
-import { IUser } from '../_models/IUser';
-import { IChatMessage } from '../_models/IChatMessage';
-// @ts-ignore
-import { IVideo } from '../_models/IVideo';
-import { IPlayListItem } from '../_models/IPlayListItem';
+import IUser from '@tntl/definition/src/user/IUser';
+import IChatMessage from '@tntl/definition/src/game/IChatMessage';
+import IVideo from '@tntl/definition/src/library/IVideo';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  gameId: string = '';
+  gameId = '';
 
-  userId: string = '';
+  userId = '';
 
   currentRound = 0;
 
@@ -77,7 +68,7 @@ export class DataService {
 
         case 'ON_PLAYLIST_ITEM_ADDED':
 
-          if(!this.playlist) {
+          if (!this.playlist) {
             this.playlist = [];
           }
 
@@ -164,9 +155,9 @@ export class DataService {
         if (filtered && filtered[0]) {
           this.checkpoints.set(p._id, filtered[0]);
         }
-      })
+      });
     },
-    (err: any) => console.error(err));
+      (err: any) => console.error(err));
   }
 
   public updateState(state: number): void {
@@ -185,7 +176,7 @@ export class DataService {
 
   public whoAmI(): void {
     this.http.get<any>('/v1/users/me')
-    .subscribe((res: any) => this.userId = res.id);
+      .subscribe((res: any) => this.userId = res.id);
   }
 
   public createGame(): void {

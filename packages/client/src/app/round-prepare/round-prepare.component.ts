@@ -9,11 +9,11 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./round-prepare.component.less'],
 })
 export class RoundPrepareComponent implements OnInit {
-  public url: string = '';
+  public url = '';
 
-  public name: string = '';
+  public name = '';
 
-  public start: number = 0;
+  public start = 0;
 
   @Output()
   submitted: EventEmitter<any> = new EventEmitter();
@@ -26,7 +26,7 @@ export class RoundPrepareComponent implements OnInit {
   public submitVideo(): void {
     this.dataService.addVideo({ url: this.url, name: this.name, start: this.start }).subscribe(
       () => this.submitted.emit(true),
-      (err: any) => { if (err.status === 202) this.submitted.emit(true); },
+      (err: any) => { if (err.status === 202) { this.submitted.emit(true); } },
     );
   }
 }

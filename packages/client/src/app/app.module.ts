@@ -18,7 +18,7 @@ import { VideoComponent } from './video/video.component';
 import { RoundPrepareComponent } from './round-prepare/round-prepare.component';
 import { RoundComponent } from './round/round.component';
 import { PlayersComponent } from './players/players.component';
-import {YouTubePlayerModule} from "@angular/youtube-player";
+import {YouTubePlayerModule} from '@angular/youtube-player';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LibraryComponent } from './library/library.component';
 

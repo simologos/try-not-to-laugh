@@ -20,15 +20,15 @@ export class VideoComponent implements OnInit {
 
   ngOnInit(): void {
     this.playerOptions = {
-      'autoplay': 1,
-      'controls': 0,
-      'autohide': 1,
-      'wmode': 'opaque', 
-      'origin': window.location.host
+      autoplay: 1,
+      controls: 0,
+      autohide: 1,
+      wmode: 'opaque',
+      origin: window.location.host
     };
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
-    
+
 
     document.body.appendChild(tag);
   }
@@ -42,7 +42,7 @@ export class VideoComponent implements OnInit {
   // Loop
   onStateChange(event: any) {
     // if (event.data === 0) {
-    //   this.player.playVideo();  
+    //   this.player.playVideo();
     // }
   }
 }
