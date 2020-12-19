@@ -35,7 +35,13 @@ export class RoundComponent implements OnInit {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
-    this.playerOptions = { controls: 0, autoplay: 1, disablekb: 1 };
+    this.playerOptions = {
+      'autoplay': 1,
+      'controls': 0,
+      'autohide': 1,
+      'wmode': 'opaque',
+      'origin': window.location.host
+    };
 
     this.done = false;
 
