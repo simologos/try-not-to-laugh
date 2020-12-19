@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-const BASE_URL = 'http://localhost:8080/v1/videos';
+const BASE_URL = '/v1/videos';
 
 export interface IVideo {
   name: string;

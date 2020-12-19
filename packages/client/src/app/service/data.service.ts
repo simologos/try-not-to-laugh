@@ -137,7 +137,7 @@ export class DataService {
   }
 
   public loadGame(id: string, join: boolean): void {
-    this.http.get<any>(`http://localhost:8080/v1/games/${id}`).subscribe((game) => {
+    this.http.get<any>(`/v1/games/${id}`).subscribe((game) => {
       this.players = game.players;
       this.playersSubject.next(this.players);
       this.gameId = id;
@@ -170,26 +170,26 @@ export class DataService {
   }
 
   public updateState(state: number): void {
-    this.http.put<any>(`http://localhost:8080/v1/games/${this.gameId}`, { state }).subscribe();
+    this.http.put<any>(`/v1/games/${this.gameId}`, { state }).subscribe();
   }
 
   public addVideo(video: IVideo): Observable<any> {
-    return this.http.post<any>(`http://localhost:8080/v1/games/${this.gameId}/playlist`, video);
+    return this.http.post<any>(`/v1/games/${this.gameId}/playlist`, video);
   }
 
   public joinGame(id: string): any {
     this.whoAmI();
     this.gameId = id;
-    return this.http.post<any>(`http://localhost:8080/v1/games/${id}/players`, '').subscribe();
+    return this.http.post<any>(`/v1/games/${id}/players`, '').subscribe();
   }
 
   public whoAmI(): void {
-    this.http.get<any>('http://localhost:8080/v1/users/me')
+    this.http.get<any>('/v1/users/me')
     .subscribe((res: any) => this.userId = res.id);
   }
 
   public createGame(): void {
-    this.http.post<any>('http://localhost:8080/v1/games', '').subscribe();
+    this.http.post<any>('/v1/games', '').subscribe();
   }
 
   public fetch(): void {
@@ -197,13 +197,13 @@ export class DataService {
   }
 
   public sendChatMessage(id: string, message: IChatMessage): void {
-    this.http.post<any>(`http://localhost:8080/v1/games/${this.gameId}/chats`, message).subscribe();
+    this.http.post<any>(`/v1/games/${this.gameId}/chats`, message).subscribe();
   }
 
   public checkpoint(videoId: string, data: any): Observable<any> {
     console.log('VIDEO ID TO CHECKPOINT::::::::::::::::: ' + videoId);
     const checkpointId = this.checkpoints.get(videoId)._id;
-    return this.http.put<any>(`http://localhost:8080/v1/games/${this.gameId}/playlist/${videoId}/${checkpointId}`, data);
+    return this.http.put<any>(`/v1/games/${this.gameId}/playlist/${videoId}/${checkpointId}`, data);
   }
 
   public triggerChatHistory(): void {

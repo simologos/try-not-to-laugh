@@ -1,5 +1,5 @@
 import { connect, Connection, connection } from "mongoose";
-import { dbHost, dbPort, dbName } from './config';
+import { dbHost, dbPort, dbName, dbPass, dbUser } from './config';
 
 export const getMongooseConnection = (): Connection => {
   return connection;
@@ -7,7 +7,8 @@ export const getMongooseConnection = (): Connection => {
 
 const connectToDb = async () => {
   try {
-    await connect(`mongodb://${dbHost}:${dbPort}/${dbName}`);
+    await connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority`);
+    
     console.log('Connected to mongo!!!');
   }
   catch (err) {

@@ -1,11 +1,18 @@
-FROM node:10
+FROM node:12-slim as runtime
 
 WORKDIR /usr/src/app
 
-COPY packages/server/dist/packages/server/src .
-COPY packages/server/node_modules .
+COPY package*.json ./
+COPY lerna.json ./
+COPY tsconfig.base.json ./
+COPY tsconfig.json ./
+COPY . .
+
+RUN yarn install
+RUN yarn bootstrap
+RUN yarn build
 
 COPY . .
 
 EXPOSE 8080
-CMD [ "node", "index.js" ]
+CMD [ "npm", "run", "execute" ]

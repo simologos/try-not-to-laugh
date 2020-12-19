@@ -22,7 +22,7 @@ import {YouTubePlayerModule} from "@angular/youtube-player";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LibraryComponent } from './library/library.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:8000/notification', options: {} };
+const config: SocketIoConfig = { url: '/notification', options: {} };
 
 @NgModule({
   declarations: [

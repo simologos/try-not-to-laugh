@@ -8,6 +8,7 @@
     "bootstrap": "lerna bootstrap --use-workspaces",
     "postbootstrap": "lerna link",
     "start": "lerna run start --parallel --stream",
+    "execute": "lerna run exec --stream",
     "build": "lerna run build --stream",
     "clean": "npm-run-all clean:build-cache clean:build clean:node-modules",
     "clean:build": "lerna run clean",

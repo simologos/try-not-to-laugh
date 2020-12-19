@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IChatMessage} from '../_models/IChatMessage';
 
-const BASE_URL = 'http://localhost:8080/v1/games';
+const BASE_URL = '/v1/games';
 
 const httpOptions = {
   headers: new HttpHeaders({
