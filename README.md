@@ -125,7 +125,7 @@ Please check the [Get started](https://socket.io/get-started) section of the soc
 
 ### Summary
 
-This is it, you've covered all the basics to write code in all b+s Connects Redux based products. Now it's time to talk about the organizational topics.
+This is it, you've covered all the basics to write code. Now it's time to talk about the organizational topics.
 
 ## Project overview
 
