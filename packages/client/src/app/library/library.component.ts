@@ -11,9 +11,9 @@ import {Observable} from "rxjs";
 })
 export class LibraryComponent implements OnInit {
 
-  @ViewChild('modal') modalTemplate: TemplateRef;
+  @ViewChild('modal') modalTemplate: TemplateRef<any> | undefined;
 
-  videos$: Observable<any>;
+  videos$: Observable<any> | undefined;
 
   formGroup: FormGroup;
 
