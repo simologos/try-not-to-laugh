@@ -10,6 +10,7 @@ COPY . .
 
 RUN yarn install
 RUN yarn bootstrap
+RUN yarn build
 
 COPY . .
 
