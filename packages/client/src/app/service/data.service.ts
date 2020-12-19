@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Observable, Subject,} from 'rxjs';
-import {map,} from 'rxjs/operators';
-import {Socket} from 'ngx-socket-io';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { map, } from 'rxjs/operators';
+import { Socket } from 'ngx-socket-io';
+import { HttpClient } from '@angular/common/http';
 
-import {Router} from '@angular/router';
-import {GameService} from './game.service';
+import { Router } from '@angular/router';
+import { GameService } from './game.service';
 import IUser from '@tntl/definition/src/user/IUser';
 import IChatMessage from '@tntl/definition/src/game/IChatMessage';
 import IVideo from '@tntl/definition/src/library/IVideo';
@@ -118,51 +118,51 @@ export class DataService {
     });
   }
 
-  sendMessage(msg: string) {
+  sendMessage(msg: string): void {
     this.socket.emit('message', msg);
   }
 
-  getMessage() {
+  getMessage(): Observable<void> {
     return this.socket
-    .fromEvent('message')
-    .pipe(map((data) => console.log(data)));
+      .fromEvent('message')
+      .pipe(map((data) => console.log(data)));
   }
 
   public loadGame(id: string, join: boolean): void {
     this.http.get<any>(`/v1/games/${id}`).subscribe((game) => {
-        this.players = game.players;
-        this.playersSubject.next(this.players);
-        this.gameId = id;
-        this.gameIdSubject.next(id);
-        this.chat = game.chat;
-        this.chatSubject.next(this.chat);
-        this.currentRound = game.currentRound;
-        this.playerCount = game.players.length;
+      this.players = game.players;
+      this.playersSubject.next(this.players);
+      this.gameId = id;
+      this.gameIdSubject.next(id);
+      this.chat = game.chat;
+      this.chatSubject.next(this.chat);
+      this.currentRound = game.currentRound;
+      this.playerCount = game.players.length;
 
-        this.playlist = game.playlist;
-        this.playlistSubject.next(this.playlist);
+      this.playlist = game.playlist;
+      this.playlistSubject.next(this.playlist);
 
-        if (join) {
-          this.joinGame(this.gameId);
+      if (join) {
+        this.joinGame(this.gameId);
+      }
+
+      if (!this.playlist || this.playlist.length === 0) {
+        return;
+      }
+
+      this.playlist.forEach(p => {
+        const filtered = p.checkpoints.filter((c: any) => c.userId === this.userId);
+
+        if (filtered && filtered[0]) {
+          this.checkpoints.set(p._id, filtered[0]);
         }
-
-        if (!this.playlist || this.playlist.length === 0) {
-          return;
-        }
-
-        this.playlist.forEach(p => {
-          const filtered = p.checkpoints.filter((c: any) => c.userId === this.userId);
-
-          if (filtered && filtered[0]) {
-            this.checkpoints.set(p._id, filtered[0]);
-          }
-        })
-      },
+      });
+    },
       (err: any) => console.error(err));
   }
 
   public updateState(state: number): void {
-    this.http.put<any>(`/v1/games/${this.gameId}`, {state}).subscribe();
+    this.http.put<any>(`/v1/games/${this.gameId}`, { state }).subscribe();
   }
 
   public addVideo(video: IVideo): Observable<any> {

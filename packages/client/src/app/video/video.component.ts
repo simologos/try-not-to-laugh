@@ -34,13 +34,13 @@ export class VideoComponent implements OnInit {
   }
 
   // Autoplay
-  onReady() {
+  onReady(): void {
     console.log('in ready');
     // this.player.playVideo();
   }
 
   // Loop
-  onStateChange(event: any) {
+  onStateChange(event: any): void {
     // if (event.data === 0) {
     //   this.player.playVideo();
     // }

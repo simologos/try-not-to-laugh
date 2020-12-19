@@ -30,7 +30,7 @@ export class WebcamComponent implements AfterViewInit {
     }
   }
 
-  async ngAfterViewInit() {
+  async ngAfterViewInit(): Promise<void> {
     // @ts-ignore
     await faceapi.nets.tinyFaceDetector.loadFromUri('assets/models');
     // @ts-ignore
@@ -41,7 +41,7 @@ export class WebcamComponent implements AfterViewInit {
     await faceapi.nets.faceExpressionNet.loadFromUri('assets/models');
   }
 
-  analyze(input: HTMLVideoElement) {
+  analyze(input: HTMLVideoElement): void {
     this.interval = setInterval(async () => {
       const detections = await faceapi.detectAllFaces(
         input,

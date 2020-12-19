@@ -52,7 +52,7 @@ export class RoundComponent implements OnInit {
   public startRound(): void {
   }
 
-  state(event: any) {
+  state(event: any): void {
     if (!this.ytPlayer || !this.cam) {
       return;
     }

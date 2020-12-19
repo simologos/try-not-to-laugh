@@ -54,7 +54,7 @@ export class GameComponent implements OnInit {
     });
   }
 
-  public videoSubmitted($event: any) {
+  public videoSubmitted($event: any): void {
     this.playerReady = $event;
   }
 }
