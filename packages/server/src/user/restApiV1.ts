@@ -62,17 +62,17 @@ use(new CustomStrategy(
   (req, done) => {
     const randomName = uniqueNamesGenerator({
       dictionaries: [adjectives, animals],
-      separator: ' ',
+      separator: '$',
       style: 'capital'
-    });
+    }).split('$');
 
     const command = addUser({
       avatar: '',
-      displayName: randomName,
-      firstName: '',
+      displayName: `${randomName[0]} ${randomName[1]}`,
+      firstName: randomName[0],
       googleId: '',
       isValidated: false,
-      lastName: '',
+      lastName: randomName[1],
       score: 0
     }, serverSubmitterId);
 
