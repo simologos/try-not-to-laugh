@@ -8,7 +8,7 @@ import { registerUpdateVideoHandler } from "./commandHandlers/updateVideoHandler
 import { registerRemoveVideoHandler } from "./commandHandlers/deleteVideoHandler";
 import bodyParser from "body-parser";
 import { isAuthenticated } from "../_middleware/authMiddleware";
-import {listVideos} from './queries/videoList'
+import { listVideos } from './queries/videoList'
 
 const registerCommandHandlers = () => {
   registerAddVideoHandler();
@@ -25,9 +25,14 @@ const registerRestEndpoints = (app: Express) => {
 
     res.setHeader('Content-Type', 'application/json');
 
-    const result = await listVideos(parseInt(page, 10) || 0, parseInt(limit, 10) || 10);
+    const result = await listVideos(
+      parseInt(page, 10) || 0,
+      parseInt(limit, 10) || 10,
+      // @ts-ignore
+      req.session.passport.user
+    );
 
-    if(result.success) {
+    if (result.success) {
       res.status(StatusCodes.OK)
     } else {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR)
