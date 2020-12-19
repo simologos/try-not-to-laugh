@@ -1,18 +1,18 @@
-<table>
+<table class="table table-striped">
   <thead>
-    <th>Name</th>
-    <th>Url</th>
-    <th>Start Seconds</th>
-    <th>Actions</th>
+  <th>Name</th>
+  <th>Url</th>
+  <th>Actions</th>
   </thead>
   <ng-container *ngIf="videos$ | async as videos">
     <ng-container *ngFor="let video of videos">
-    <tr>
-      <td>{{video.name}}</td>
-      <td>{{video.url}}</td>
-      <td>{{video.start}}</td>
-      <td>Edit - Delete</td>
-    </tr>
+      <tr>
+        <td>{{video.name}}</td>
+        <td>{{video.url}}</td>
+        <td>
+          <button (click)="remove(video.id)">X</button>
+        </td>
+      </tr>
     </ng-container>
   </ng-container>
 </table>
@@ -30,15 +30,14 @@
   <div class="modal-body" style="padding: 2em;">
     <form [formGroup]="formGroup">
       <div class="form-group">
-          <div class="row">
+        <div class="row">
           <label for="name">Name</label>
-          <input id="name" class="form-control" placeholder="Name" formControlName="name"></div>
-          <div class="row">
+          <input id="name" class="form-control" placeholder="Name" formControlName="name">
+        </div>
+        <div class="row">
           <label for="url">URL</label>
-          <input id="url" class="form-control" placeholder="URL" formControlName="url"></div>
-          <div class="row">
-          <label for="time">Startzeit</label>
-          <input id="time" type="number" class="form-control" placeholder="Startzeit" formControlName="start"></div>
+          <input id="url" class="form-control" placeholder="URL" formControlName="url">
+        </div>
       </div>
     </form>
   </div>

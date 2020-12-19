@@ -1,26 +1,35 @@
-<ng-container *ngIf="!roundReady">
+<div class="row col-md-12">
+  <div class="col-md-9">
 
-  <div style="text-align: center">
-  <h2>Prepare for Round {{currentRound + 1}} - you are {{playerReady ? 'ready' : 'not ready'}}</h2>
+    <ng-container *ngIf="!roundReady">
 
-    <div *ngIf="!playerReady">
+      <div style="text-align: center">
+        <h2>Prepare for Round {{currentRound + 1}} - you are {{playerReady ? 'ready'
+          : 'not ready'}}</h2>
 
-      <app-round-prepare (submitted)="videoSubmitted($event)"></app-round-prepare>
+        <div *ngIf="!playerReady">
 
-    </div>
-    <div *ngIf="playerReady">
-      <p>Your video was added to the round queue</p>
-      <p>Please wait while other players are still setting up...</p>
-    </div>
-  <div class="row">
+          <app-round-prepare (submitted)="videoSubmitted($event)"></app-round-prepare>
+
+        </div>
+        <div *ngIf="playerReady">
+          <p>Your video was added to the round queue</p>
+          <p>Please wait while other players are still setting up...</p>
+        </div>
+        <div class="row">
+        </div>
+      </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="roundReady">
+      <app-round #round></app-round>
+    </ng-container>
+
   </div>
+  <div clasS="col-md-3">
+    <app-chat></app-chat>
   </div>
-</ng-container>
+</div>
 
-
-<ng-container *ngIf="roundReady">
-  <app-round #round></app-round>
-</ng-container>
-
-<app-chat></app-chat>
 

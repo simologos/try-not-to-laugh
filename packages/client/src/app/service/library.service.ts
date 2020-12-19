@@ -21,7 +21,11 @@ export class LibraryService {
     this.http.post<any>(BASE_URL, video).subscribe();
   }
 
-  public getVideos(): Observable<IVideo> {
+  public getVideos(): Observable<any> {
     return this.http.get<IVideo>(BASE_URL);
+  }
+
+  public delete(id: string): void {
+    this.http.delete(`${BASE_URL}/${id}`).subscribe();
   }
 }
