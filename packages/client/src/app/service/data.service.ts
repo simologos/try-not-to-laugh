@@ -78,6 +78,10 @@ export class DataService {
 
           break;
 
+        case 'ON_GAME_LEFT':
+          this.fetch();
+          break;
+
         case 'ON_GAME_STATE_CHANGED':
           this.state = event.payload.state;
           this.fetch();
@@ -131,7 +135,7 @@ export class DataService {
 
   public loadGame(id: string, join: boolean): void {
     this.http.get<any>(`/v1/games/${id}`).subscribe((game) => {
-        this.players = game.players;
+        this.players = game.users;
         this.playersSubject.next(this.players);
         this.gameId = id;
         this.gameIdSubject.next(id);
@@ -203,7 +207,24 @@ export class DataService {
   }
 
   public leaveGame(): void {
-    this.http.delete<any>(`/v1/games/${this.gameId}/players`);
+    this.http.delete<any>(`/v1/games/${this.gameId}/players`).subscribe();
+    this.init();
+  }
+
+  public init(): void {
+    this.players = [];
+    this.playersSubject.next(this.players);
+    this.gameId = undefined;
+    this.gameIdSubject.next(this.gameId);
+    this.chat = [];
+    this.chatSubject.next(this.chat);
+    this.currentRound = 0;
+    this.playerCount = 0;
+
+    this.playlist = [];
+    this.playlistSubject.next(this.playlist);
+
+    this.checkpoints.clear();
   }
 
   private clear(): void {
