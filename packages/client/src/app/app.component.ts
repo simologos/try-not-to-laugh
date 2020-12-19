@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import {DataService} from './service/data.service';
-import {catchError, map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -16,6 +14,6 @@ export class AppComponent {
   }
 
   public logout(): void {
-   window.location.href = 'http://localhost:8080/auth/logout';
+   window.location.href = '/auth/logout';
   }
 }

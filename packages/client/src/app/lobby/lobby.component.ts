@@ -13,7 +13,7 @@ import {IUser} from '../_models/IUser';
 export class LobbyComponent implements OnInit {
 
   players$: Observable<IUser[]> | undefined;
-  public base = 'http://localhost:8080/#/lobby/';
+  public base = '/#/lobby/';
   public lobbylink = 'init a game first';
   public id: string = '';
 

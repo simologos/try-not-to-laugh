@@ -18,10 +18,10 @@ export class LandingComponent implements OnInit {
   }
 
   public guestAuth(): void {
-    window.location.href = 'http://localhost:8080/auth/anonymous';
+    window.location.href = '/auth/anonymous';
   }
 
   public googleAuth(): void {
-    window.location.href = 'http://localhost:8080/auth/google';
+    window.location.href = '/auth/google';
   }
 }

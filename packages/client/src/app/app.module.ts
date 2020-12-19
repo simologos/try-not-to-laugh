@@ -20,7 +20,7 @@ import { RoundComponent } from './round/round.component';
 import { PlayersComponent } from './players/players.component';
 import {YouTubePlayerModule} from "@angular/youtube-player";
 
-const config: SocketIoConfig = { url: 'http://localhost:8000/notification', options: {} };
+const config: SocketIoConfig = { url: '/notification', options: {} };
 
 @NgModule({
   declarations: [
