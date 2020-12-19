@@ -1,9 +1,9 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild,} from '@angular/core';
-import {DataService} from '../service/data.service';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {map} from "rxjs/operators";
-import {LibraryService} from "../service/library.service";
-import {Observable} from "rxjs";
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { DataService } from '../service/data.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { map } from 'rxjs/operators';
+import { LibraryService } from '../service/library.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-round-prepare',
@@ -11,11 +11,11 @@ import {Observable} from "rxjs";
   styleUrls: ['./round-prepare.component.less'],
 })
 export class RoundPrepareComponent implements OnInit {
-  public url: string = '';
+  public url = '';
 
-  public name: string = '';
+  public name = '';
 
-  public start: number = 0;
+  public start = 0;
 
   videos$: Observable<any[]> | undefined;
 
@@ -36,10 +36,10 @@ export class RoundPrepareComponent implements OnInit {
   }
 
   public submitVideo(): void {
-    this.dataService.addVideo({url: this.url, name: this.name, start: this.start}).subscribe(
+    this.dataService.addVideo({ url: this.url, name: this.name, start: this.start }).subscribe(
       () => this.submitted.emit(true),
       (err: any) => {
-        if (err.status === 202) this.submitted.emit(true);
+        if (err.status === 202) { this.submitted.emit(true); }
       },
     );
   }

@@ -1,9 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {IUser} from '../_models/IUser';
-import {IChatMessage} from '../_models/IChatMessage';
-import {DataService} from '../service/data.service';
-import {GameService} from '../service/game.service';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import IChatMessage from '@tntl/definition/src/game/IChatMessage';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-chat',
@@ -27,10 +25,12 @@ export class ChatComponent implements OnInit {
     this.dataService.gameIdSubject.subscribe(val => this.gameId = val);
   }
 
-  public sendMessage() {
+  public sendMessage(): void {
 
     const m: IChatMessage = {
+      sender: '',
       message: this.currentMessage,
+      createdAt: 0
     };
 
     this.dataService.sendChatMessage(this.gameId, m);

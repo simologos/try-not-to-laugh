@@ -2,9 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DataService} from '../service/data.service';
 import {Observable} from 'rxjs';
-import {IUser} from '../_models/IUser';
-import {WebcamComponent} from "../webcam/webcam.component";
-import {RoundComponent} from "../round/round.component";
+import {WebcamComponent} from '../webcam/webcam.component';
+import {RoundComponent} from '../round/round.component';
 
 @Component({
   selector: 'app-game',
@@ -19,9 +18,9 @@ export class GameComponent implements OnInit {
   gameId: string;
   state: string;
   title: string;
-  currentRound: number = 0;
-  playerReady: boolean = false;
-  roundReady: boolean = false;
+  currentRound = 0;
+  playerReady = false;
+  roundReady = false;
   playlist$: Observable<any[]> | undefined;
 
 
@@ -41,7 +40,7 @@ export class GameComponent implements OnInit {
 
     this.dataService.currentRoundSubject.subscribe( r => {
       this.currentRound = r;
-    })
+    });
 
     this.playlist$.subscribe(v => {
       if (v && v.length === 2) {
@@ -55,7 +54,7 @@ export class GameComponent implements OnInit {
     });
   }
 
-  public videoSubmitted($event: any) {
+  public videoSubmitted($event: any): void {
     this.playerReady = $event;
   }
 }

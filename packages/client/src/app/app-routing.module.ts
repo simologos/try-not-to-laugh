@@ -4,7 +4,7 @@ import {GameComponent} from './game/game.component';
 import {HomeComponent} from './home/home.component';
 import {LandingComponent} from './landing/landing.component';
 import {LobbyComponent} from './lobby/lobby.component';
-import {LibraryComponent} from "./library/library.component";
+import {LibraryComponent} from './library/library.component';
 
 
 const routes: Routes = [

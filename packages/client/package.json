@@ -40,7 +40,8 @@
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "uuid": "^8.3.1",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",    
+    "@tntl/definition": "^1.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.4",
