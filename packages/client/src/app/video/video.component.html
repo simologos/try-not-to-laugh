@@ -1,1 +1,7 @@
-<p>video works!</p>
+<youtube-player
+  #player
+  videoId="D-qj0L68RhQ"
+  (ready)="onReady($event)"
+  [playerVars]="playerOptions"
+  (stateChange)="onStateChange($event)"
+></youtube-player>
