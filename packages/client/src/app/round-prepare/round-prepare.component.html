@@ -1,5 +1,32 @@
 <p>Please add your video for the upcoming round to the playlist</p>
-URL: <input type="url" [(ngModel)]="url" /> <br>
-Title: <input [(ngModel)]="name" /> <br>
-Start: <input type="number" [(ngModel)]="start" /> <br>
+URL: <input type="url" [(ngModel)]="url"/> <br>
+Title: <input [(ngModel)]="name"/> <br>
+Start: <input type="number" [(ngModel)]="start"/> <br>
 <button (click)="submitVideo()">Submit</button>
+<button (click)="open()">From Library</button>
+
+
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Video</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="padding: 2em;">
+    <table class="table table-striped table-responsive">
+      <thead>
+      <th>Name</th>
+      <th>Url</th>
+      </thead>
+      <ng-container *ngIf="videos$ | async as videos">
+        <ng-container *ngFor="let video of videos">
+          <tr style="cursor: pointer;" (click)="choose(video); modal.dismiss('chosen')">
+            <td>{{video.name}}</td>
+            <td>{{video.url}}</td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </table>
+  </div>
+</ng-template>

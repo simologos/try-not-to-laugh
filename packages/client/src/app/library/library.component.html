@@ -1,21 +1,23 @@
-<table class="table table-striped">
-  <thead>
-  <th>Name</th>
-  <th>Url</th>
-  <th>Actions</th>
-  </thead>
-  <ng-container *ngIf="videos$ | async as videos">
-    <ng-container *ngFor="let video of videos">
-      <tr>
-        <td>{{video.name}}</td>
-        <td>{{video.url}}</td>
-        <td>
-          <button (click)="remove(video.id)">X</button>
-        </td>
-      </tr>
+<div class="align-content-center">
+  <table class="table table-striped table-responsive">
+    <thead>
+    <th>Name</th>
+    <th>Url</th>
+    <th>Actions</th>
+    </thead>
+    <ng-container *ngIf="videos$ | async as videos">
+      <ng-container *ngFor="let video of videos">
+        <tr>
+          <td>{{video.name}}</td>
+          <td>{{video.url}}</td>
+          <td>
+            <button (click)="remove(video.id)">X</button>
+          </td>
+        </tr>
+      </ng-container>
     </ng-container>
-  </ng-container>
-</table>
+  </table>
+</div>
 
 <button (click)="add()">+</button>
 
@@ -42,6 +44,8 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="save()">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="save(); modal.dismiss('saved')">
+      Save
+    </button>
   </div>
 </ng-template>
