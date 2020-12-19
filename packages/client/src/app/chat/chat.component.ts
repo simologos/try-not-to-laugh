@@ -22,6 +22,7 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataService.triggerChatHistory();
     this.messages$ = this.dataService.chatSubject;
     this.dataService.gameIdSubject.subscribe(val => this.gameId = val);
   }

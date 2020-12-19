@@ -76,14 +76,10 @@ export class DataService {
           break;
 
         case 'ON_PLAYLIST_ITEM_ADDED':
-          const video = event.payload;
 
           if(!this.playlist) {
             this.playlist = [];
           }
-
-          this.playlist.push(video);
-          this.playlistSubject.next(this.playlist);
 
           this.fetch();
 
@@ -91,6 +87,7 @@ export class DataService {
 
         case 'ON_GAME_STATE_CHANGED':
           this.state = event.payload.state;
+          this.fetch();
 
           // game was started, redirect players to playing page
           if (this.state === 1) {
@@ -100,9 +97,10 @@ export class DataService {
 
         case 'ON_NEXT_ROUND_STARTED':
 
+          this.currentRound += 1;
+          this.currentRoundSubject.next(this.currentRound);
           this.playlist = [];
-          this.playlistSubject.next(this.playlist);
-          this.fetch();
+          this.playlistSubject.next(undefined);
           break;
 
         case 'ON_ERROR':
@@ -151,8 +149,6 @@ export class DataService {
 
       this.playlist = game.playlist;
       this.playlistSubject.next(this.playlist);
-
-      console.log(this.playlist);
 
       if (join) {
         this.joinGame(this.gameId);
@@ -205,13 +201,13 @@ export class DataService {
   }
 
   public checkpoint(videoId: string, data: any): Observable<any> {
+    console.log('VIDEO ID TO CHECKPOINT::::::::::::::::: ' + videoId);
     const checkpointId = this.checkpoints.get(videoId)._id;
     return this.http.put<any>(`http://localhost:8080/v1/games/${this.gameId}/playlist/${videoId}/${checkpointId}`, data);
   }
 
-  public nextRound(): void {
-    //this.playlist = [];
-    //this.playlistSubject.next([]);
+  public triggerChatHistory(): void {
+    this.chatSubject.next(this.chat);
   }
 
   public leaveGame(): void {

@@ -13,6 +13,8 @@ import {RoundComponent} from "../round/round.component";
 })
 export class GameComponent implements OnInit {
 
+  @ViewChild('round') round: RoundComponent | undefined;
+
   url: string;
   gameId: string;
   state: string;
@@ -34,8 +36,7 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // start the game
-    this.dataService.updateState(1);
+
     this.playlist$ = this.dataService.playlistSubject;
 
     this.dataService.currentRoundSubject.subscribe( r => {
@@ -44,15 +45,14 @@ export class GameComponent implements OnInit {
 
     this.playlist$.subscribe(v => {
       if (v && v.length === 2) {
-        //this.dataService.fetch();
+        this.round?.startRound();
         this.roundReady = true;
       }
+      if (!v || (v && v.length === 0)) {
+        this.playerReady = false;
+        this.roundReady = false;
+      }
     });
-  }
-
-  public initNextRound(): void {
-    this.dataService.nextRound();
-    this.roundReady = false;
   }
 
   public videoSubmitted($event: any) {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from '../service/data.service';
-import {GameService} from '../service/game.service';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
 import {IUser} from '../_models/IUser';
@@ -41,7 +40,7 @@ export class LobbyComponent implements OnInit {
   public startEnabled(): boolean {
 
     if (!this.dataService.players) {
-      return;
+      return false;
     }
 
     return this.dataService.players.length >= 2 && this.dataService.players.length <= 4;

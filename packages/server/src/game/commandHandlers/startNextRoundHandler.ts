@@ -24,7 +24,7 @@ const processCommand = async (command: Command<IIdentifier>) => {
     if (game === null) {
       publishEvent(getErrorEvent('Game not found.', command));
       return
-    }    
+    }
 
     const playlistGroup = groupByKey(game.playlist, 'addedBy');
     const currentRound = game.currentRound || 0;
@@ -43,8 +43,8 @@ const processCommand = async (command: Command<IIdentifier>) => {
         return;
       }
 
-      const playlist = [...playlistGroup[e]].sort(function (a, b) { 
-        return a.createdAt - b.createdAt 
+      const playlist = [...playlistGroup[e]].sort(function (a, b) {
+        return a.createdAt - b.createdAt
       });
 
       if (!playlist[currentRound]) {
@@ -63,13 +63,15 @@ const processCommand = async (command: Command<IIdentifier>) => {
         if (cpGroup[f][0].state < VideoState.Played) {
           currentRoundFinished = false;
           return;
-        }        
+        }
       });
 
-      if(playlist[currentRound + 1]) {
+      // TODO we do not need this right?
+      /*if(playlist[currentRound + 1]) {
         nextRound.playlist.push(...playlist[currentRound + 1]);
-      }      
+      }*/
     });
+
 
     if(!currentRoundFinished) {
       return;
@@ -86,13 +88,14 @@ const processCommand = async (command: Command<IIdentifier>) => {
       return;
     }
 
-    if(nextRound.playlist.length < game.players.length) {
+    // TODO we do not need this right?
+    /*if(nextRound.playlist.length < game.players.length) {
       return;
-    }
+    }*/
 
     game.currentRound = currentRound + 1;
     await game.save();
-    
+
     publishEvent(getEventWithRecipients<IPlayRound>(onNextRoundStarted, command, game.players, nextRound));
 
   } catch (e) {

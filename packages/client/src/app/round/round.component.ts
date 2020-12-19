@@ -18,6 +18,8 @@ export class RoundComponent implements OnInit {
 
   playerOptions: any;
 
+  done = false;
+
   current = {
     id: '',
     url: '',
@@ -35,9 +37,13 @@ export class RoundComponent implements OnInit {
     document.body.appendChild(tag);
     this.playerOptions = { controls: 0, autoplay: 1, disablekb: 1 };
 
-    this.videosToPlay = this.dataService.playlist;
+    this.done = false;
 
+    this.videosToPlay = this.dataService.playlist;
     this.setVideoData();
+  }
+
+  public startRound(): void {
   }
 
   state(event: any) {
@@ -70,6 +76,7 @@ export class RoundComponent implements OnInit {
     }
 
     this.dataService.checkpoint(this.current.id, data).subscribe(
+      // FIXME WTF?????????
       () => this.loadNext(),
       () => this.loadNext(),
     );
@@ -85,11 +92,8 @@ export class RoundComponent implements OnInit {
   setVideoData(): any {
     const video = this.videosToPlay[this.index];
 
-    console.log(video);
-
     if (!video) {
-      // TODO ROUND FINISHED
-      alert('round finished');
+      this.done = true;
       return;
     }
 

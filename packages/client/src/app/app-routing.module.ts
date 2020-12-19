@@ -4,6 +4,7 @@ import {GameComponent} from './game/game.component';
 import {HomeComponent} from './home/home.component';
 import {LandingComponent} from './landing/landing.component';
 import {LobbyComponent} from './lobby/lobby.component';
+import {LibraryComponent} from "./library/library.component";
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'game/:id', component: GameComponent },
   { path: 'lobby', component: LobbyComponent },
   { path: 'lobby/:id', component: LobbyComponent },
+  { path: 'library', component: LibraryComponent },
   { path: '', component: LandingComponent },
 ];
 

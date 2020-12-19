@@ -14,7 +14,7 @@ import { serverSubmitterId } from "../../config";
 
 const processCommand = async (command: Command<ICheckpointUpdate & IIdentifier>) => {
 
-  try {  
+  try {
 
     const game = await gameModel.findById(command.payload.gameId).exec();
 
@@ -22,7 +22,7 @@ const processCommand = async (command: Command<ICheckpointUpdate & IIdentifier>)
       publishEvent(getErrorEvent('Game not found.', command));
       return;
     }
-   
+
     if (game.state !== GameState.Active) {
       publishEvent(getErrorEvent(`Cannot update a checkpoint of a game which is not in state active.`, command));
       return;
@@ -64,7 +64,7 @@ const processCommand = async (command: Command<ICheckpointUpdate & IIdentifier>)
     );
 
     publishCommand(startNextRound({
-      id: command.id
+      id: game.id
     }, serverSubmitterId));
 
   } catch (e) {
