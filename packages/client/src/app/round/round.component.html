@@ -15,11 +15,11 @@
     </ng-container>
 
     <ng-container *ngIf="done">
-      <p>waiting for other players to finish the round</p>
+      <p>waiting for other players to finish the round...</p>
     </ng-container>
 
   </div>
   <div class="cold-md-6">
-    <app-webcam #cam (failed)="onFail($event)"></app-webcam>
+    <app-webcam *ngIf="!done" #cam (failed)="onFail($event)"></app-webcam>
   </div>
 </div>

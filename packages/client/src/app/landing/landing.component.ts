@@ -15,10 +15,6 @@ export class LandingComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    if (this.cam) {
-      this.cam.track();
-    }
-
     this.dataService.userSubject.subscribe( (val) => {
       if (val) {
         this.loggedin = true;

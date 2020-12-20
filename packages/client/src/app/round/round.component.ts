@@ -79,7 +79,7 @@ export class RoundComponent implements OnInit {
     const data = {
       userId: this.dataService.userId,
       state: 2,
-      laughed: expressions.laughDetected === 1 || expressions.faceLost === 1 ? 1 : 0,
+      laughed: !!(expressions.laughDetected > 0 || expressions.faceLost > 0),
     };
 
     this.dataService.checkpoint(this.current.id, data).subscribe(
@@ -102,7 +102,6 @@ export class RoundComponent implements OnInit {
       this.done = true;
       return;
     }
-
 
     this.current = {
       id: video._id,

@@ -65,11 +65,6 @@ const processCommand = async (command: Command<IIdentifier>) => {
           return;
         }
       });
-
-      // TODO we do not need this right?
-      /*if(playlist[currentRound + 1]) {
-        nextRound.playlist.push(...playlist[currentRound + 1]);
-      }*/
     });
 
 
@@ -87,11 +82,6 @@ const processCommand = async (command: Command<IIdentifier>) => {
       ))
       return;
     }
-
-    // TODO we do not need this right?
-    /*if(nextRound.playlist.length < game.players.length) {
-      return;
-    }*/
 
     game.currentRound = currentRound + 1;
     await game.save();

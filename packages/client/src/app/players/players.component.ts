@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {DataService} from "../service/data.service";
 
 @Component({
   selector: 'app-players',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayersComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  players$: Observable<any[]> | undefined;
+
+  scores: Map<any, any> | undefined;
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.scores = this.dataService.scores;
   }
 
 }

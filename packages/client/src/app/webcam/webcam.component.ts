@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild,
+  AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild,
 } from '@angular/core';
 import * as faceapi from 'face-api.js';
 
@@ -14,6 +14,9 @@ export class WebcamComponent implements AfterViewInit {
 
   @Output()
   failed: EventEmitter<any> = new EventEmitter();
+
+  @Input()
+  alwaysTrack = false;
 
   public state = '';
 
@@ -39,6 +42,10 @@ export class WebcamComponent implements AfterViewInit {
     await faceapi.nets.faceRecognitionNet.loadFromUri('assets/models');
     // @ts-ignore
     await faceapi.nets.faceExpressionNet.loadFromUri('assets/models');
+
+    if (this.alwaysTrack) {
+      this.track();
+    }
   }
 
   analyze(input: HTMLVideoElement): void {
@@ -85,15 +92,23 @@ export class WebcamComponent implements AfterViewInit {
 
   public untrack(): void {
     clearInterval(this.interval);
+    this.expressions = {
+      faceLost: 0,
+      laughDetected: 0,
+    };
   }
 
   public laughDetected(): void {
-    this.failed.emit(this.expressions);
-    this.untrack();
+    if (!this.alwaysTrack) {
+      this.failed.emit(this.expressions);
+      this.untrack();
+    }
   }
 
   public faceLost(): void {
-    this.failed.emit(this.expressions);
-    this.untrack();
+    if (!this.alwaysTrack) {
+      this.failed.emit(this.expressions);
+      this.untrack();
+    }
   }
 }

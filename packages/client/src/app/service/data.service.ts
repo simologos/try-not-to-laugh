@@ -33,6 +33,8 @@ export class DataService {
 
   checkpoints = new Map();
 
+  scores = new Map();
+
   currentRoundSubject: Subject<number> = new Subject();
 
   gameIdSubject: Subject<string> = new Subject();
@@ -159,6 +161,7 @@ export class DataService {
       this.chatSubject.next(this.chat);
       this.currentRound = game.currentRound;
       this.playerCount = game.players.length;
+      this.scores.clear();
 
       this.playlist = game.playlist;
       this.playlistSubject.next(this.playlist);
@@ -248,5 +251,16 @@ export class DataService {
   }
 
   private score(): void {
+    this.playlist.forEach( p => {
+      const current = this.scores.get(p.addedBy);
+      let points = current || 0;
+      p.checkpoints.forEach( ( c: any ) => {
+        if (c.laughed === true) {
+          points += 1;
+        }
+      })
+
+      this.scores.set(p.addedBy, points);
+    })
   }
 }
