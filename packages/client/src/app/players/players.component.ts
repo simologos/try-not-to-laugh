@@ -12,12 +12,12 @@ export class PlayersComponent implements OnInit {
   @Input()
   players$: Observable<any[]> | undefined;
 
+  @Input()
   scores: Map<any, any> | undefined;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.scores = this.dataService.scores;
   }
 
 }
