@@ -132,8 +132,10 @@ export const registerRestEndpoints = (app: Express, socketNs: SocketIO.Namespace
   });
 
   app.get('/auth/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
+    req.session.destroy(() => {
+      req.logout();
+      res.redirect('/');
+    });
   });
 
   app.get('/auth/anonymous', authenticate('custom', { failureRedirect: '/' }), (req, res) => {
