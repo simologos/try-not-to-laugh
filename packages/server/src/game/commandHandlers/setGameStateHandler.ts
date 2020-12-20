@@ -54,7 +54,7 @@ const processCommand = async (command: Command<IGameStateUpdate>) => {
       });
 
       for(let i = 0, il = game.players.length; i < il; i++) {
-        if (!results[game.players[i]]) {
+        if (results[game.players[i]]) {
           const user = await userModel.findById(game.players[i]).exec();
           user.score = user.score + results[game.players[i]];
           await user.save();
