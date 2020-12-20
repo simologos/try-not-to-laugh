@@ -46,19 +46,30 @@ export class GameComponent implements OnInit {
       this.currentRound = r;
     });
 
-    this.playlist$.subscribe((v) => {
+    this.playlist$.subscribe(v => {
+
+      if (v) {
+        const sliced = v.slice(this.currentRound * this.dataService.playerCount);
+        const filtered = sliced.filter( (vid: any) => vid.addedBy === this.dataService.userId);
+
+        if (filtered[0]) {
+          this.playerReady = true;
+        } else {
+          this.playerReady = false;
+        }
+      }
+
       if (v && v.length === this.dataService.playerCount * (this.currentRound + 1)) {
         this.round?.startRound();
         this.roundReady = true;
       }
       if (!v || (v && v.length === 0)) {
-        this.playerReady = false;
         this.roundReady = false;
       }
     });
   }
 
   public videoSubmitted($event: any): void {
-    this.playerReady = $event;
+    //this.playerReady = $event;
   }
 }

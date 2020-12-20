@@ -15,8 +15,9 @@ export class LandingComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.userSubject.subscribe((val) => {
-      if (val) {
+    this.dataService.whoAmI();
+    this.dataService.userSubject.subscribe((next) => {
+      if (next) {
         this.loggedin = true;
       } else {
         this.loggedin = false;

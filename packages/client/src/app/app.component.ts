@@ -10,16 +10,27 @@ import { DataService } from './service/data.service';
 export class AppComponent implements OnInit {
   liveData$: Observable<any> | undefined;
 
-  constructor(private dataService: DataService) {
+  loggedin = false;
+
+  constructor (private dataService: DataService) {
   }
 
   public logout(): void {
+    this.loggedin = false;
     this.deleteCookie('connect.sid');
     window.location.href = '/auth/logout';
   }
 
   ngOnInit(): void {
     const cookie = this.getCookie('connect.sid');
+
+    this.dataService.userSubject.subscribe((next) => {
+      if (next) {
+        this.loggedin = true;
+      } else {
+        this.loggedin = false;
+      }
+    });
 
     if (cookie) {
       this.dataService.whoAmI();
