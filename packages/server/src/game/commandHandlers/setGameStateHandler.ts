@@ -8,6 +8,8 @@ import { gameModel } from "../repository/model";
 import GameState from "@tntl/definition/src/game/GameState";
 import IGameStateUpdate from "@tntl/definition/src/game/IGameStateUpdate";
 import { userModel } from "../../user/repository/model";
+import { Types } from "mongoose";
+import IExtendedPlayerList from "@tntl/definition/dist/game/IExtendedPlayerList";
 
 const isTransitionValid = (currentState: GameState, nextState: GameState) => {
   switch(currentState){
@@ -64,9 +66,25 @@ const processCommand = async (command: Command<IGameStateUpdate>) => {
 
     await game.save();
 
-    publishEvent(getEventWithRecipients<IGameStateUpdate>(onGameStateChanged, command, game.players, {
+    const players = await userModel.find({
+      '_id': {
+        $in: game.players.map(e => Types.ObjectId(e))
+      }
+    }).sort({'score': -1}).exec();
+
+    publishEvent(getEventWithRecipients<IGameStateUpdate & IExtendedPlayerList>(onGameStateChanged, command, game.players, {
       state: game.state,
       id: game.id,
+      users: players.map(e => ({
+        id: e.id,
+        avatar: e.avatar,
+        displayName: e.displayName,
+        firstName: e.firstName,
+        googleId: e.googleId,
+        isValidated: e.isValidated,
+        lastName: e.lastName,
+        score: e.score
+      }))
     }));
 
   } catch (e) {

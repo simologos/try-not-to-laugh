@@ -1,6 +1,14 @@
-import IPlaylistBase from "./IPlaylistBase";
+import IOwnership from "../generic/IOwnership";
+import IVideo from "../library/IVideo";
 
-interface IPlaylistUpdate extends IPlaylistBase {
+/**
+ * Definition of an update model used to update a play list entry.
+ */
+interface IPlaylistUpdate extends IOwnership, IVideo {
+
+  /**
+   * The unique identifier of the game.
+   */
   gameId: string;
 }
 
