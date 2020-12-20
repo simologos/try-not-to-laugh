@@ -4,12 +4,12 @@ import IIdentifier from "@tntl/definition/src/generic/IIdentifier";
 import { libraryModel } from "../repository/model";
 import IQueryResult from "../../_definition/rest/IQueryResult";
 
-export const listVideos = async (page: number, limit: number)
+export const listVideos = async (page: number, limit: number, userId: string)
 : Promise<IQueryResult<IVideo & IIdentifier>> => {
 
   try {
     const result = await libraryModel
-      .find()
+      .find({addedBy: userId})
       .skip(page * limit)
       .limit(limit)
       .exec();
