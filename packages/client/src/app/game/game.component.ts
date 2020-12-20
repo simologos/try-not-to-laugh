@@ -43,7 +43,7 @@ export class GameComponent implements OnInit {
     });
 
     this.playlist$.subscribe(v => {
-      if (v && v.length === 2) {
+      if (v && v.length === this.dataService.playerCount * (this.currentRound + 1)) {
         this.round?.startRound();
         this.roundReady = true;
       }

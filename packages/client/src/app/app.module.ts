@@ -21,6 +21,7 @@ import { PlayersComponent } from './players/players.component';
 import {YouTubePlayerModule} from '@angular/youtube-player';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LibraryComponent } from './library/library.component';
+import { ScoreComponent } from './score/score.component';
 
 const config: SocketIoConfig = { url: '/notification', options: {} };
 
@@ -37,7 +38,8 @@ const config: SocketIoConfig = { url: '/notification', options: {} };
     RoundPrepareComponent,
     RoundComponent,
     PlayersComponent,
-    LibraryComponent
+    LibraryComponent,
+    ScoreComponent
   ],
   imports: [
     BrowserModule,

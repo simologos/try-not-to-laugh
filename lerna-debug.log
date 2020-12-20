@@ -1,0 +1,24 @@
+0 silly argv {
+0 silly argv   _: [ 'clean' ],
+0 silly argv   yes: true,
+0 silly argv   y: true,
+0 silly argv   lernaVersion: '3.22.1',
+0 silly argv   '$0': 'node_modules\\lerna\\cli.js'
+0 silly argv }
+1 notice cli v3.22.1
+2 verbose rootPath C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222
+3 info versioning independent
+4 info clean removing C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\client\node_modules
+5 silly rimrafDir C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\client\node_modules
+6 info clean removing C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\definition\node_modules
+7 silly rimrafDir C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\definition\node_modules
+8 info clean removing C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\documentation\node_modules
+9 silly rimrafDir C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\documentation\node_modules
+10 info clean removing C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\server\node_modules
+11 silly rimrafDir C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\server\node_modules
+12 verbose rimrafDir removed C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\definition\node_modules
+13 verbose rimrafDir removed C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\documentation\node_modules
+14 verbose rimrafDir removed C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\server\node_modules
+15 error Error: Command failed: C:\Program Files\nodejs\node.exe C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\node_modules\@lerna\rimraf-dir\node_modules\rimraf\bin.js --no-glob C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\packages\client\node_modules\
+15 error     at makeError (C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\node_modules\execa\index.js:174:9)
+15 error     at C:\Users\igoR\IdeaProjects\try-not-to-laugh2222222222\node_modules\execa\index.js:278:16

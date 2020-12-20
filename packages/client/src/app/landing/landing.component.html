@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div style="text-align: center;" *ngIf="!loggedin">
   <button (click)="guestAuth()" class="secondary">Play as Guest</button>
   <button (click)="googleAuth()" routerLink="lobby" class="primary">Login with Google</button>
 </div>

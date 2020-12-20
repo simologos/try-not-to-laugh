@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { WebcamComponent } from '../webcam/webcam.component';
+import {DataService} from "../service/data.service";
 
 @Component({
   selector: 'app-landing',
@@ -9,12 +10,23 @@ import { WebcamComponent } from '../webcam/webcam.component';
 export class LandingComponent implements OnInit {
   @ViewChild('cam') cam: WebcamComponent | undefined;
 
-  constructor() { }
+  loggedin = false;
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     if (this.cam) {
       this.cam.track();
     }
+
+    this.dataService.userSubject.subscribe( (val) => {
+      if (val) {
+        this.loggedin = true;
+      } else {
+        this.loggedin = false;
+      }
+    })
+
   }
 
   public guestAuth(): void {

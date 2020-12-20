@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { map, } from 'rxjs/operators';
-import { Socket } from 'ngx-socket-io';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {map,} from 'rxjs/operators';
+import {Socket} from 'ngx-socket-io';
+import {HttpClient} from '@angular/common/http';
 
-import { Router } from '@angular/router';
-import { GameService } from './game.service';
+import {Router} from '@angular/router';
+import {GameService} from './game.service';
 import IUser from '@tntl/definition/src/user/IUser';
 import IChatMessage from '@tntl/definition/src/game/IChatMessage';
 import IVideo from '@tntl/definition/src/library/IVideo';
+import {LibraryService} from "./library.service";
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  gameId = '';
+  gameId: string | undefined = undefined;
 
   userId = '';
 
@@ -42,7 +43,9 @@ export class DataService {
 
   playlistSubject: Subject<any[]> = new Subject();
 
-  constructor(private socket: Socket, private gameService: GameService, private http: HttpClient, private router: Router) {
+  userSubject: Subject<string> = new Subject();
+
+  constructor(private socket: Socket, private gameService: GameService, private libraryService: LibraryService, private http: HttpClient, private router: Router) {
 
     socket.on('connect', (data: any) => {
       console.log(data);
@@ -53,7 +56,7 @@ export class DataService {
         case 'ON_GAME_ADDED':
           this.gameId = event.payload.id;
           this.players = [];
-          this.joinGame(this.gameId);
+          this.joinGame(this.gameId as string);
           this.fetch();
 
           break;
@@ -89,6 +92,14 @@ export class DataService {
           if (this.state === 1) {
             this.router.navigate(['/game', this.gameId]);
           }
+          if (this.state === 2) {
+
+            this.score();
+
+            this.router.navigate(['/score']);
+            this.fetch();
+            localStorage.removeItem('currentGameId');
+          }
           break;
 
         case 'ON_NEXT_ROUND_STARTED':
@@ -96,7 +107,12 @@ export class DataService {
           this.currentRound += 1;
           this.currentRoundSubject.next(this.currentRound);
           this.playlist = [];
-          this.playlistSubject.next(undefined);
+          this.playlistSubject.next(this.playlist);
+          this.checkpoints.clear();
+          break;
+
+        case 'ON_VIDEO_ADDED':
+          // TODO trigger playlist reload
           break;
 
         case 'ON_ERROR':
@@ -137,6 +153,7 @@ export class DataService {
       this.players = game.users;
       this.playersSubject.next(this.players);
       this.gameId = id;
+      localStorage.setItem('currentGameId', id);
       this.gameIdSubject.next(id);
       this.chat = game.chat;
       this.chatSubject.next(this.chat);
@@ -181,7 +198,10 @@ export class DataService {
 
   public whoAmI(): void {
     this.http.get<any>('/v1/users/me')
-      .subscribe((res: any) => this.userId = res.id);
+      .subscribe((res: any) => {
+        this.userId = res.id
+        this.userSubject.next(this.userId);
+      });
   }
 
   public createGame(): void {
@@ -189,7 +209,7 @@ export class DataService {
   }
 
   public fetch(): void {
-    this.loadGame(this.gameId, false);
+    this.loadGame(this.gameId as string, false);
   }
 
   public sendChatMessage(id: string, message: IChatMessage): void {
@@ -207,6 +227,7 @@ export class DataService {
 
   public leaveGame(): void {
     this.http.delete<any>(`/v1/games/${this.gameId}/players`).subscribe();
+    localStorage.removeItem('currentGameId');
     this.init();
   }
 
@@ -226,6 +247,6 @@ export class DataService {
     this.checkpoints.clear();
   }
 
-  private clear(): void {
+  private score(): void {
   }
 }

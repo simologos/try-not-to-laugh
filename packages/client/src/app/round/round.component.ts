@@ -40,12 +40,13 @@ export class RoundComponent implements OnInit {
       controls: 0,
       autohide: 1,
       wmode: 'opaque',
-      origin: window.location.host
+      origin: window.location.host,
     };
 
     this.done = false;
 
     this.videosToPlay = this.dataService.playlist;
+    this.index = this.dataService.playerCount * this.dataService.currentRound;
     this.setVideoData();
   }
 
@@ -82,7 +83,6 @@ export class RoundComponent implements OnInit {
     };
 
     this.dataService.checkpoint(this.current.id, data).subscribe(
-      // FIXME WTF?????????
       () => this.loadNext(),
       () => this.loadNext(),
     );

@@ -5,8 +5,7 @@
     <span *ngIf="id"><input readonly="true" value="{{lobbylink}}"
                             style="width: auto; min-width: 400px;">
       <button>copy</button></span>
-    <button *ngIf="!id" class="primary">Join</button>
-    <button *ngIf="!id" (click)="initGame()" class="primary">Create new Game!</button>
+      <button *ngIf="!id" (click)="initGame()" class="primary">Create new Game!</button>
     <br>
     <div *ngIf="id">
       <div *ngIf="players$ | async as players; else nope" class="players">

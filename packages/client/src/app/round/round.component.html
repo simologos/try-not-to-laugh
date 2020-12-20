@@ -1,15 +1,25 @@
-<ng-container *ngIf="!done">
-  <youtube-player #player
-                  [videoId]="current.url"
-                  [playerVars]="playerOptions"
-                  [startSeconds]="current.start"
-                  [endSeconds]="current.start + 30"
-                  (stateChange)="state($event)">
+<div class="row col-md-12">
+  <div class="cold-md-6">
+    <ng-container *ngIf="!done">
 
-  </youtube-player>
-  <app-webcam #cam (failed)="onFail($event)"></app-webcam>
-</ng-container>
+      <h2><b>now playing:</b> {{current.name}}</h2>
 
-<ng-container *ngIf="done">
-  waiting for other players to finish the round
-</ng-container>
+      <youtube-player #player
+                      [videoId]="current.url"
+                      [playerVars]="playerOptions"
+                      [startSeconds]="current.start"
+                      [endSeconds]="current.start + 30"
+                      (stateChange)="state($event)">
+
+      </youtube-player>
+    </ng-container>
+
+    <ng-container *ngIf="done">
+      <p>waiting for other players to finish the round</p>
+    </ng-container>
+
+  </div>
+  <div class="cold-md-6">
+    <app-webcam #cam (failed)="onFail($event)"></app-webcam>
+  </div>
+</div>
