@@ -1,14 +1,14 @@
-import IVideo from "@tntl/definition/src/library/IVideo";
-import { Express, Request, Response } from "express";
-import { publishCommand } from "../commandPublisher";
-import { addVideo, removeVideo, updateVideo } from "./commands";
+import IVideo from '@tntl/definition/src/library/IVideo';
+import { Express, Request, Response } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import { registerAddVideoHandler } from "./commandHandlers/addVideoHandler";
-import { registerUpdateVideoHandler } from "./commandHandlers/updateVideoHandler";
-import { registerRemoveVideoHandler } from "./commandHandlers/deleteVideoHandler";
-import bodyParser from "body-parser";
-import { isAuthenticated } from "../_middleware/authMiddleware";
-import { listVideos } from './queries/videoList'
+import bodyParser from 'body-parser';
+import { publishCommand } from '../commandPublisher';
+import { addVideo, removeVideo, updateVideo } from './commands';
+import { registerAddVideoHandler } from './commandHandlers/addVideoHandler';
+import { registerUpdateVideoHandler } from './commandHandlers/updateVideoHandler';
+import { registerRemoveVideoHandler } from './commandHandlers/deleteVideoHandler';
+import { isAuthenticated } from '../_middleware/authMiddleware';
+import { listVideos } from './queries/videoList';
 
 const registerCommandHandlers = () => {
   registerAddVideoHandler();
@@ -17,8 +17,7 @@ const registerCommandHandlers = () => {
 };
 
 const registerRestEndpoints = (app: Express) => {
-
-  const jsonParser = bodyParser.json()
+  const jsonParser = bodyParser.json();
 
   app.get('/v1/videos', isAuthenticated, jsonParser, async (req: Request, res: Response) => {
     const { page, limit } = req.body;
@@ -29,13 +28,13 @@ const registerRestEndpoints = (app: Express) => {
       parseInt(page, 10) || 0,
       parseInt(limit, 10) || 10,
       // @ts-ignore
-      req.session.passport.user
+      req.session.passport.user,
     );
 
     if (result.success) {
-      res.status(StatusCodes.OK)
+      res.status(StatusCodes.OK);
     } else {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
     }
 
     res
@@ -43,17 +42,16 @@ const registerRestEndpoints = (app: Express) => {
   });
 
   app.post('/v1/videos', isAuthenticated, jsonParser, (req: Request<{}, {}, IVideo>, res: Response) => {
-
     const { name, url, start } = req.body;
 
     publishCommand(addVideo(
       {
         name,
         url,
-        start
+        start,
       },
       // @ts-ignore
-      req.session.passport.user
+      req.session.passport.user,
     ));
 
     res
@@ -62,7 +60,6 @@ const registerRestEndpoints = (app: Express) => {
   });
 
   app.put('/v1/videos/:videoId', isAuthenticated, jsonParser, (req: Request, res: Response) => {
-
     const { videoId } = req.params;
     const { name, url, start } = req.body;
 
@@ -71,10 +68,10 @@ const registerRestEndpoints = (app: Express) => {
         name,
         url,
         start,
-        id: videoId
+        id: videoId,
       },
       // @ts-ignore
-      req.session.passport.user
+      req.session.passport.user,
     ));
 
     res
@@ -87,10 +84,10 @@ const registerRestEndpoints = (app: Express) => {
 
     publishCommand(removeVideo(
       {
-        id: videoId
+        id: videoId,
       },
       // @ts-ignore
-      req.session.passport.user
+      req.session.passport.user,
     ));
 
     res

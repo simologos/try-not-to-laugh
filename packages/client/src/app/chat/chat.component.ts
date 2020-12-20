@@ -6,12 +6,13 @@ import { DataService } from '../service/data.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.less']
+  styleUrls: ['./chat.component.less'],
 })
 export class ChatComponent implements OnInit {
-
   gameId: string;
+
   messages$: Observable<IChatMessage[]> | undefined;
+
   currentMessage: string;
 
   constructor(private dataService: DataService) {
@@ -22,19 +23,17 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.triggerChatHistory();
     this.messages$ = this.dataService.chatSubject;
-    this.dataService.gameIdSubject.subscribe(val => this.gameId = val);
+    this.dataService.gameIdSubject.subscribe((val) => this.gameId = val);
   }
 
   public sendMessage(): void {
-
     const m: IChatMessage = {
       sender: '',
       message: this.currentMessage,
-      createdAt: 0
+      createdAt: 0,
     };
 
     this.dataService.sendChatMessage(this.gameId, m);
     this.currentMessage = '';
   }
-
 }

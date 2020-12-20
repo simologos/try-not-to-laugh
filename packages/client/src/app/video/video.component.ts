@@ -1,14 +1,17 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component, Input, OnInit, ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-video',
   templateUrl: './video.component.html',
-  styleUrls: ['./video.component.less']
+  styleUrls: ['./video.component.less'],
 })
 export class VideoComponent implements OnInit {
-
   @ViewChild('player') player: any;
+
   videoId: string | undefined;
+
   playerOptions: any;
 
   @Input()
@@ -24,11 +27,10 @@ export class VideoComponent implements OnInit {
       controls: 0,
       autohide: 1,
       wmode: 'opaque',
-      origin: window.location.host
+      origin: window.location.host,
     };
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
-
 
     document.body.appendChild(tag);
   }

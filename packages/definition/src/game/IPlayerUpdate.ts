@@ -1,5 +1,5 @@
-import IIdentifier from "../generic/IIdentifier";
-import IUser from "../user/IUser";
+import IIdentifier from '../generic/IIdentifier';
+import IUser from '../user/IUser';
 
 /**
  * Data model used to describe that a player joined or left
@@ -16,6 +16,6 @@ interface IPlayerUpdate {
    * The player who joined or left the game.
    */
   user: IUser & IIdentifier;
-};
+}
 
 export default IPlayerUpdate;

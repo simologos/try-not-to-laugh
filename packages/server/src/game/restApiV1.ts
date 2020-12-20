@@ -1,9 +1,14 @@
-import { Express, Request, Response } from "express";
-import { publishCommand } from "../commandPublisher";
+import { Express, Request, Response } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import bodyParser from "body-parser";
-import { isAuthenticated } from "../_middleware/authMiddleware";
-import { registerAddGameHandler } from "./commandHandlers/addGameHandler";
+import bodyParser from 'body-parser';
+import IIdentifier from '@tntl/definition/src/generic/IIdentifier';
+import GameState from '@tntl/definition/src/game/GameState';
+import IPlaylistUpdate from '@tntl/definition/src/game/IPlaylistUpdate';
+import ICheckpointUpdate from '@tntl/definition/src/game/ICheckpointUpdate';
+import IChatMessage from '@tntl/definition/src/game/IChatMessage';
+import { publishCommand } from '../commandPublisher';
+import { isAuthenticated } from '../_middleware/authMiddleware';
+import { registerAddGameHandler } from './commandHandlers/addGameHandler';
 import {
   addGame,
   addPlaylistItem,
@@ -12,23 +17,18 @@ import {
   sendChatMessage,
   setGameState,
   updateCheckpoint,
-  updatePlaylistItem
-} from "./commands";
-import IIdentifier from "@tntl/definition/src/generic/IIdentifier";
-import { registerJoinGameHandler } from "./commandHandlers/joinGameHandler";
-import { registerLeaveGameHandler } from "./commandHandlers/leaveGameHandler";
-import GameState from "@tntl/definition/src/game/GameState";
-import { registerSetGameStateHandler } from "./commandHandlers/setGameStateHandler";
-import IPlaylistUpdate from "@tntl/definition/src/game/IPlaylistUpdate";
-import ICheckpointUpdate from "@tntl/definition/src/game/ICheckpointUpdate";
-import { registerAddPlaylistItemHandler } from "./commandHandlers/addPlaylistItemHandler";
-import { registerUpdatePlaylistItemHandler } from "./commandHandlers/updatePlaylistItemHandler";
-import { registerSendChatMessageHandler } from "./commandHandlers/sendChatMessageHandler";
-import IChatMessage from "@tntl/definition/src/game/IChatMessage";
-import { registerStartNextRound } from "./commandHandlers/startNextRoundHandler";
-import { registerUpdateCheckpointHandler } from "./commandHandlers/updateCheckpointHandler";
-import { listGames } from "./queries/gameList";
-import { getGameById } from "./queries/findGame";
+  updatePlaylistItem,
+} from './commands';
+import { registerJoinGameHandler } from './commandHandlers/joinGameHandler';
+import { registerLeaveGameHandler } from './commandHandlers/leaveGameHandler';
+import { registerSetGameStateHandler } from './commandHandlers/setGameStateHandler';
+import { registerAddPlaylistItemHandler } from './commandHandlers/addPlaylistItemHandler';
+import { registerUpdatePlaylistItemHandler } from './commandHandlers/updatePlaylistItemHandler';
+import { registerSendChatMessageHandler } from './commandHandlers/sendChatMessageHandler';
+import { registerStartNextRound } from './commandHandlers/startNextRoundHandler';
+import { registerUpdateCheckpointHandler } from './commandHandlers/updateCheckpointHandler';
+import { listGames } from './queries/gameList';
+import { getGameById } from './queries/findGame';
 
 const registerCommandHandlers = () => {
   registerAddGameHandler();
@@ -43,8 +43,7 @@ const registerCommandHandlers = () => {
 };
 
 const registerRestEndpoints = (app: Express) => {
-
-  const jsonParser = bodyParser.json()
+  const jsonParser = bodyParser.json();
 
   app.get('/v1/games', isAuthenticated, jsonParser, async (req: Request, res: Response) => {
     const { page, limit } = req.body;
@@ -54,9 +53,9 @@ const registerRestEndpoints = (app: Express) => {
     const result = await listGames(parseInt(page, 10) || 0, parseInt(limit, 10) || 10);
 
     if (result.success) {
-      res.status(StatusCodes.OK)
+      res.status(StatusCodes.OK);
     } else {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
     }
 
     res.end(JSON.stringify(result));
@@ -74,13 +73,14 @@ const registerRestEndpoints = (app: Express) => {
       const result = await getGameById(id);
 
       if (result.success) {
-        res.status(StatusCodes.OK)
+        res.status(StatusCodes.OK);
       } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR);
       }
 
       res.end(JSON.stringify(result));
-    });
+    },
+  );
 
   app.post(
     '/v1/games',
@@ -90,7 +90,7 @@ const registerRestEndpoints = (app: Express) => {
       const command = addGame(
         null,
         // @ts-ignore
-        req.session.passport.user
+        req.session.passport.user,
       );
 
       publishCommand(command);
@@ -98,26 +98,26 @@ const registerRestEndpoints = (app: Express) => {
       res
         .status(StatusCodes.ACCEPTED)
         .send(ReasonPhrases.ACCEPTED);
-    });
+    },
+  );
 
   app.put(
     '/v1/games/:gameId',
     isAuthenticated,
     jsonParser,
     (req: Request<{ gameId: string }, {}, { state: GameState }>, res: Response) => {
-
       const { gameId } = req.params;
       const { state } = req.body;
 
-      console.log(req.body)
+      console.log(req.body);
 
       const command = setGameState(
         {
           state,
-          id: gameId
+          id: gameId,
         },
         // @ts-ignore
-        req.session.passport.user
+        req.session.passport.user,
       );
 
       publishCommand(command);
@@ -125,56 +125,57 @@ const registerRestEndpoints = (app: Express) => {
       res
         .status(StatusCodes.ACCEPTED)
         .send(ReasonPhrases.ACCEPTED);
-    });
+    },
+  );
 
   app.post(
     '/v1/games/:gameId/players',
     isAuthenticated,
     jsonParser,
     (req: Request<{ gameId: string }, {}, IIdentifier>, res: Response) => {
-
       const { gameId } = req.params;
 
       publishCommand(joinGame(
         {
-          id: gameId
+          id: gameId,
         },
         // @ts-ignore
-        req.session.passport.user
+        req.session.passport.user,
       ));
 
       res
         .status(StatusCodes.ACCEPTED)
         .send(ReasonPhrases.ACCEPTED);
-    });
+    },
+  );
 
   app.delete(
     '/v1/games/:gameId/players',
     isAuthenticated,
     jsonParser,
     (req: Request<{ gameId: string }, {}, IIdentifier>, res: Response) => {
-
       const { gameId } = req.params;
 
       publishCommand(leaveGame(
         {
-          id: gameId
+          id: gameId,
         },
         // @ts-ignore
-        req.session.passport.user
+        req.session.passport.user,
       ));
 
       res
         .status(StatusCodes.ACCEPTED)
         .send(ReasonPhrases.ACCEPTED);
-    });
+    },
+  );
 
   app.post(
     '/v1/games/:gameId/playlist',
     isAuthenticated,
     jsonParser,
     (req: Request<{ gameId: string }, {}, IPlaylistUpdate>, res: Response) => {
-      console.log(req.body)
+      console.log(req.body);
       const { gameId } = req.params;
       const { name, url, start } = req.body;
 
@@ -185,23 +186,23 @@ const registerRestEndpoints = (app: Express) => {
           gameId,
           start,
           // @ts-ignore
-          addedBy: req.session.passport.user
+          addedBy: req.session.passport.user,
         },
         // @ts-ignore
-        req.session.passport.user
+        req.session.passport.user,
       ));
 
       res
         .status(StatusCodes.ACCEPTED)
         .send(ReasonPhrases.ACCEPTED);
-    });
+    },
+  );
 
   app.put(
     '/v1/games/:gameId/playlist/:itemId',
     isAuthenticated,
     jsonParser,
     (req: Request<{ gameId: string, itemId: string }, {}, IPlaylistUpdate>, res: Response) => {
-
       const { gameId, itemId } = req.params;
       const { name, url, start } = req.body;
 
@@ -213,16 +214,17 @@ const registerRestEndpoints = (app: Express) => {
           start,
           id: itemId,
           // @ts-ignore
-          addedBy: req.session.passport.user
+          addedBy: req.session.passport.user,
         },
         // @ts-ignore
-        req.session.passport.user
+        req.session.passport.user,
       ));
 
       res
         .status(StatusCodes.ACCEPTED)
         .send(ReasonPhrases.ACCEPTED);
-    });
+    },
+  );
 
   app.put(
     '/v1/games/:gameId/playlist/:itemId/:checkpointId',
@@ -233,7 +235,6 @@ const registerRestEndpoints = (app: Express) => {
       itemId: string,
       checkpointId: string
     }, {}, ICheckpointUpdate>, res: Response) => {
-
       const { gameId, itemId, checkpointId } = req.params;
       const { state, laughed } = req.body;
 
@@ -243,16 +244,17 @@ const registerRestEndpoints = (app: Express) => {
           laughed,
           gameId,
           checkpointId,
-          id: itemId
+          id: itemId,
         },
         // @ts-ignore
-        req.session.passport.user
+        req.session.passport.user,
       ));
 
       res
         .status(StatusCodes.ACCEPTED)
         .send(ReasonPhrases.ACCEPTED);
-    });
+    },
+  );
 
   app.post(
     '/v1/games/:gameId/chats',
@@ -261,23 +263,23 @@ const registerRestEndpoints = (app: Express) => {
     (req: Request<{
       gameId: string
     }, {}, IChatMessage>, res: Response) => {
-
       const { gameId } = req.params;
       const { message } = req.body;
 
       publishCommand(sendChatMessage(
         {
           message,
-          id: gameId
+          id: gameId,
         },
         // @ts-ignore
-        req.session.passport.user
+        req.session.passport.user,
       ));
 
       res
         .status(StatusCodes.ACCEPTED)
         .send(ReasonPhrases.ACCEPTED);
-    });
+    },
+  );
 };
 
 const initModule = (app: Express) => {

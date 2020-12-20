@@ -6,18 +6,14 @@ import { Event } from '../_definition/events/Event';
 let io: socket.Server;
 let ns: socket.Namespace;
 
-export const getNamespace = () => {
-  return ns;
-};
+export const getNamespace = () => ns;
 
 export const startNotificationServer = (server: Server) => {
-
   io = socket(server);
 
   ns = io.of('/notification');
 
   ns.on('connection', (socket: Socket) => {
-
     try {
       const userId = socket.request.session.passport.user;
       const sessionId = socket.id;
@@ -26,12 +22,11 @@ export const startNotificationServer = (server: Server) => {
         socket.emit('event', event);
       });
 
-      socket.on('disconnect', function () {
+      socket.on('disconnect', () => {
         console.log('Got disconnect!');
 
         unsubscribe();
       });
-
     } catch (e) {
       socket.emit('event', e);
     }

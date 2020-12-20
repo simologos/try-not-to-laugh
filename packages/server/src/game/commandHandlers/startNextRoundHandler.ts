@@ -1,29 +1,28 @@
-import { Command } from "../../_definition/commands/Command";
-import { publishCommand, subscribe } from "../../commandPublisher"
-import { onNextRoundStarted } from "../events";
-import { publishEvent } from "../../eventPublisher";
-import { getErrorEvent, getEventWithRecipients } from "../../_helpers/eventGenerator";
-import { setGameState, startNextRound } from "../commands";
-import { gameModel } from "../repository/model";
-import IIdentifier from "@tntl/definition/src/generic/IIdentifier";
-import VideoState from "@tntl/definition/src/game/VideoState";
-import IPlayRound from "@tntl/definition/src/game/IPlayRound";
-import { roundsPerGame, serverSubmitterId } from "../../config";
-import GameState from "@tntl/definition/src/game/GameState";
+import IIdentifier from '@tntl/definition/src/generic/IIdentifier';
+import VideoState from '@tntl/definition/src/game/VideoState';
+import IPlayRound from '@tntl/definition/src/game/IPlayRound';
+import GameState from '@tntl/definition/src/game/GameState';
+import { Command } from '../../_definition/commands/Command';
+import { publishCommand, subscribe } from '../../commandPublisher';
+import { onNextRoundStarted } from '../events';
+import { publishEvent } from '../../eventPublisher';
+import { getErrorEvent, getEventWithRecipients } from '../../_helpers/eventGenerator';
+import { setGameState, startNextRound } from '../commands';
+import { gameModel } from '../repository/model';
+import { roundsPerGame, serverSubmitterId } from '../../config';
 
 const groupByKey = (list: any[], key:string) => list.reduce(
   (hash, obj) => ({ ...hash, [obj[key]]: (hash[obj[key]] || []).concat(obj) }),
-  {}
+  {},
 );
 
 const processCommand = async (command: Command<IIdentifier>) => {
-
   try {
     const game = await gameModel.findById(command.payload.id).exec();
 
     if (game === null) {
       publishEvent(getErrorEvent('Game not found.', command));
-      return
+      return;
     }
 
     const playlistGroup = groupByKey(game.playlist, 'addedBy');
@@ -33,19 +32,16 @@ const processCommand = async (command: Command<IIdentifier>) => {
 
     const nextRound: IPlayRound = {
       gameId: game._id,
-      playlist: []
+      playlist: [],
     };
 
-    game.players.forEach(e => {
-
+    game.players.forEach((e) => {
       if (!playlistGroup[e]) {
         currentRoundFinished = false;
         return;
       }
 
-      const playlist = [...playlistGroup[e]].sort(function (a, b) {
-        return a.createdAt - b.createdAt
-      });
+      const playlist = [...playlistGroup[e]].sort((a, b) => a.createdAt - b.createdAt);
 
       if (!playlist[currentRound]) {
         currentRoundFinished = false;
@@ -54,7 +50,7 @@ const processCommand = async (command: Command<IIdentifier>) => {
 
       const cpGroup = groupByKey(playlist[currentRound].checkpoints, 'userId');
 
-      game.players.forEach(f => {
+      game.players.forEach((f) => {
         if (!cpGroup[f]) {
           currentRoundFinished = false;
           return;
@@ -62,24 +58,22 @@ const processCommand = async (command: Command<IIdentifier>) => {
 
         if (cpGroup[f][0].state < VideoState.Played) {
           currentRoundFinished = false;
-          return;
         }
       });
     });
 
-
-    if(!currentRoundFinished) {
+    if (!currentRoundFinished) {
       return;
     }
 
-    if(currentRound >= roundsPerGame - 1) {
+    if (currentRound >= roundsPerGame - 1) {
       publishCommand(setGameState(
         {
           state: GameState.Finished,
-          id: game.id
+          id: game.id,
         },
-        serverSubmitterId
-      ))
+        serverSubmitterId,
+      ));
       return;
     }
 
@@ -87,7 +81,6 @@ const processCommand = async (command: Command<IIdentifier>) => {
     await game.save();
 
     publishEvent(getEventWithRecipients<IPlayRound>(onNextRoundStarted, command, game.players, nextRound));
-
   } catch (e) {
     // Todo.
   }

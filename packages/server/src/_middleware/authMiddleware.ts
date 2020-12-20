@@ -1,7 +1,5 @@
-
-
-import { Request, Response, NextFunction } from "express";
-import { ReasonPhrases, StatusCodes } from "http-status-codes";
+import { Request, Response, NextFunction } from 'express';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 const cancelRequest = (res: Response) => {
   res
@@ -11,10 +9,9 @@ const cancelRequest = (res: Response) => {
 };
 
 export const isAuthenticated = (req: Request<{}, {}, any>, res: Response, next: NextFunction) => {
-
   try {
     // @ts-ignore
-    const user = req.session.passport.user;
+    const { user } = req.session.passport;
 
     if (user !== null) {
       next();
@@ -22,7 +19,7 @@ export const isAuthenticated = (req: Request<{}, {}, any>, res: Response, next: 
     }
 
     cancelRequest(res);
-  } catch(e){
+  } catch (e) {
     cancelRequest(res);
   }
 };

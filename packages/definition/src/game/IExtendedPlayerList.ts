@@ -1,5 +1,5 @@
-import IIdentifier from "../generic/IIdentifier";
-import IUser from "../user/IUser";
+import IIdentifier from '../generic/IIdentifier';
+import IUser from '../user/IUser';
 
 /**
  * Interface used to extend any given data model with a list of users.

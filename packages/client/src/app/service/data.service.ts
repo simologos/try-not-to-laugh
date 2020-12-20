@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
-import {map,} from 'rxjs/operators';
-import {Socket} from 'ngx-socket-io';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Socket } from 'ngx-socket-io';
+import { HttpClient } from '@angular/common/http';
 
-import {Router} from '@angular/router';
-import {GameService} from './game.service';
+import { Router } from '@angular/router';
 import IUser from '@tntl/definition/src/user/IUser';
 import IChatMessage from '@tntl/definition/src/game/IChatMessage';
 import IVideo from '@tntl/definition/src/library/IVideo';
-import {LibraryService} from "./library.service";
+import { GameService } from './game.service';
+import { LibraryService } from './library.service';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +50,6 @@ export class DataService {
   userSubject: Subject<string> = new Subject();
 
   constructor(private socket: Socket, private gameService: GameService, private libraryService: LibraryService, private http: HttpClient, private router: Router) {
-
     socket.on('connect', (data: any) => {
       console.log(data);
     });
@@ -181,7 +180,7 @@ export class DataService {
         return;
       }
 
-      this.playlist.forEach(p => {
+      this.playlist.forEach((p) => {
         const filtered = p.checkpoints.filter((c: any) => c.userId === this.userId);
 
         if (filtered && filtered[0]) {
@@ -189,7 +188,7 @@ export class DataService {
         }
       });
     },
-      (err: any) => console.error(err));
+    (err: any) => console.error(err));
   }
 
   public updateState(state: number): void {
@@ -209,7 +208,7 @@ export class DataService {
   public whoAmI(): void {
     this.http.get<any>('/v1/users/me')
       .subscribe((res: any) => {
-        this.userId = res.id
+        this.userId = res.id;
         this.userSubject.next(this.userId);
       });
   }
@@ -258,16 +257,16 @@ export class DataService {
   }
 
   private score(): void {
-    this.playlist.forEach( p => {
+    this.playlist.forEach((p) => {
       const current = this.scores.get(p.addedBy);
       let points = current || 0;
-      p.checkpoints.forEach( ( c: any ) => {
+      p.checkpoints.forEach((c: any) => {
         if (c.laughed === true) {
           points += 1;
         }
-      })
+      });
 
       this.scores.set(p.addedBy, points);
-    })
+    });
   }
 }

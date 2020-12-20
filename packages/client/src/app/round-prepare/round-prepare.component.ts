@@ -1,9 +1,11 @@
-import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { DataService } from '../service/data.service';
+import {
+  Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild,
+} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
-import { LibraryService } from '../service/library.service';
 import { Observable } from 'rxjs';
+import { LibraryService } from '../service/library.service';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-round-prepare',
@@ -25,8 +27,8 @@ export class RoundPrepareComponent implements OnInit {
   submitted: EventEmitter<any> = new EventEmitter();
 
   constructor(private dataService: DataService,
-              private libraryService: LibraryService,
-              private modalService: NgbModal) {
+    private libraryService: LibraryService,
+    private modalService: NgbModal) {
   }
 
   ngOnInit(): void {

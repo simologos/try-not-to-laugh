@@ -1,8 +1,8 @@
-import IIdentifier from "@tntl/definition/src/generic/IIdentifier";
-import IUser from "@tntl/definition/src/user/IUser";
-import IError from "definition/src/generic/IError";
-import IResponse from "definition/src/generic/IResponse";
-import { userModel } from "../repository/model";
+import IIdentifier from '@tntl/definition/src/generic/IIdentifier';
+import IUser from '@tntl/definition/src/user/IUser';
+import IError from 'definition/src/generic/IError';
+import IResponse from 'definition/src/generic/IResponse';
+import { userModel } from '../repository/model';
 
 export const getUserById = async (id: string): Promise<IResponse & (IUser & IIdentifier | IError)> => {
   try {
@@ -17,8 +17,8 @@ export const getUserById = async (id: string): Promise<IResponse & (IUser & IIde
       lastName: user.lastName,
       googleId: user.googleId,
       isValidated: user.isValidated,
-      score: user.score
-    }
+      score: user.score,
+    };
   } catch (e) {
     return null;
   }
@@ -26,7 +26,7 @@ export const getUserById = async (id: string): Promise<IResponse & (IUser & IIde
 
 export const getUserByGoogleId = async (googleId: string): Promise<IUser & IIdentifier | null> => {
   try {
-    const user = await userModel.findOne({ googleId: googleId }).exec();
+    const user = await userModel.findOne({ googleId }).exec();
 
     if (user === null) {
       return null;
@@ -40,8 +40,8 @@ export const getUserByGoogleId = async (googleId: string): Promise<IUser & IIden
       lastName: user.lastName,
       googleId: user.googleId,
       isValidated: user.isValidated,
-      score: user.score
-    }
+      score: user.score,
+    };
   } catch (e) {
     return null;
   }

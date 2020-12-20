@@ -14,4 +14,4 @@ type Event<T> = {
   id: string;
 };
 
-export { Event as Event };
+export { Event };

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { WebcamComponent } from '../webcam/webcam.component';
-import {DataService} from "../service/data.service";
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-landing',
@@ -23,7 +23,6 @@ export class LandingComponent implements OnInit {
         this.loggedin = false;
       }
     });
-
   }
 
   public guestAuth(): void {

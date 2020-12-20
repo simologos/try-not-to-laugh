@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   loggedin = false;
 
-  constructor (private dataService: DataService) {
+  constructor(private dataService: DataService) {
   }
 
   public logout(): void {
@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     const cookie = this.getCookie('connect.sid');
 
     this.dataService.userSubject.subscribe((next) => {
@@ -61,6 +60,6 @@ export class AppComponent implements OnInit {
     date.setTime(date.getTime() + (-1 * 24 * 60 * 60 * 1000));
 
     // Set it
-    document.cookie = name + '=; expires=' + date.toUTCString() + '; path=/';
+    document.cookie = `${name}=; expires=${date.toUTCString()}; path=/`;
   }
 }

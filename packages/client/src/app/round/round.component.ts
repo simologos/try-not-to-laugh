@@ -75,7 +75,6 @@ export class RoundComponent implements OnInit {
   }
 
   checkpoint(expressions: any): void {
-
     const data = {
       userId: this.dataService.userId,
       state: 2,
@@ -86,7 +85,6 @@ export class RoundComponent implements OnInit {
       () => this.loadNext(),
       () => this.loadNext(),
     );
-
   }
 
   loadNext(): void {

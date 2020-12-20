@@ -1,6 +1,6 @@
-import GameState from "./GameState";
-import IChatMessage from "./IChatMessage";
-import IPlaylistItem from "./IPlaylistItem";
+import GameState from './GameState';
+import IChatMessage from './IChatMessage';
+import IPlaylistItem from './IPlaylistItem';
 
 /**
  * Data model used to describe the complete state of a game.

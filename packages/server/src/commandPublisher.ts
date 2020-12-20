@@ -1,4 +1,4 @@
-import { Command } from "./_definition/commands/Command";
+import { Command } from './_definition/commands/Command';
 
 const subscribers: { [key: string]: ((command: Command<any>) => void)[] } = {};
 
@@ -10,15 +10,15 @@ export const publishCommand = (command: Command<any>) => {
 
 export const subscribe = (command: string, callback: (action: Command<any>) => void) => {
   if (!Array.isArray(subscribers[command])) {
-    subscribers[command] = []
+    subscribers[command] = [];
   }
 
   subscribers[command].push(callback);
-  const index = subscribers[command].length - 1
+  const index = subscribers[command].length - 1;
 
   return {
     unsubscribe() {
       subscribers[command].splice(index, 1);
-    }
-  }
+    },
+  };
 };

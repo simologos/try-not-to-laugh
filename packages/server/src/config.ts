@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 export const port = process.env.PORT;
@@ -17,6 +18,6 @@ export const sessionSecret = process.env.SESSION_SECRET;
 
 export const maxPlayerPerGame = 4;
 export const minPlayerPerGame = 2;
-export const roundsPerGame = 1;
+export const roundsPerGame = 2;
 
 export const serverSubmitterId = 'tntlServer';

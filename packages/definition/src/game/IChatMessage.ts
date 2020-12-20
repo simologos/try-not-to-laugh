@@ -1,4 +1,4 @@
-import IChatMessageBase from "./IChatMessageBase";
+import IChatMessageBase from './IChatMessageBase';
 
 /**
  * Definition of a chat message which can be send from

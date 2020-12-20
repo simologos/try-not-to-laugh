@@ -1,4 +1,4 @@
-import IPaginatedRequest from "./IPaginatedRequest";
+import IPaginatedRequest from './IPaginatedRequest';
 
 /**
  * Response model containing the data to a paginated request.

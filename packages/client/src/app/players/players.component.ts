@@ -1,14 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {DataService} from "../service/data.service";
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-players',
   templateUrl: './players.component.html',
-  styleUrls: ['./players.component.less']
+  styleUrls: ['./players.component.less'],
 })
 export class PlayersComponent implements OnInit {
-
   @Input()
   players$: Observable<any[]> | undefined;
 
@@ -19,5 +18,4 @@ export class PlayersComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

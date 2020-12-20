@@ -1,4 +1,3 @@
-
 /**
  * Definition of an error.
  */
