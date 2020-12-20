@@ -46,11 +46,10 @@ export class GameComponent implements OnInit {
       this.currentRound = r;
     });
 
-    this.playlist$.subscribe(v => {
-
+    this.playlist$.subscribe((v) => {
       if (v) {
         const sliced = v.slice(this.currentRound * this.dataService.playerCount);
-        const filtered = sliced.filter( (vid: any) => vid.addedBy === this.dataService.userId);
+        const filtered = sliced.filter((vid: any) => vid.addedBy === this.dataService.userId);
 
         if (filtered[0]) {
           this.playerReady = true;
@@ -70,6 +69,6 @@ export class GameComponent implements OnInit {
   }
 
   public videoSubmitted($event: any): void {
-    //this.playerReady = $event;
+    // this.playerReady = $event;
   }
 }

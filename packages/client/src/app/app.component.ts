@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   loggedin = false;
 
-  constructor (private dataService: DataService) {
+  constructor(private dataService: DataService) {
   }
 
   public logout(): void {

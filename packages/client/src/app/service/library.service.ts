@@ -1,7 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, pipe, Subject, Subscription} from 'rxjs';
-import {map} from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+  Observable, pipe, Subject, Subscription,
+} from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const BASE_URL = '/v1/videos';
 
@@ -14,7 +16,6 @@ export interface IVideo {
   providedIn: 'root',
 })
 export class LibraryService {
-
   videos: Subscription | undefined;
 
   librarySubject: Subject<any[]> = new Subject();
