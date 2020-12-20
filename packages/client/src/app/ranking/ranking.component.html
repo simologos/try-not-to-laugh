@@ -1,13 +1,15 @@
 <div class="align-content-center">
   <table class="table table-striped table-responsive">
     <thead>
+    <th></th>
     <th>Username</th>
     <th>Score</th>
     </thead>
     <ng-container *ngIf="ranking$ | async as rankings">
       <ng-container *ngFor="let ranking of rankings">
         <tr>
-          <td>{{ranking.name}}</td>
+          <td><img src="{{ranking.avatar}}"></td>
+          <td>{{ranking.displayName}}</td>
           <td>{{ranking.score}}</td>
         </tr>
       </ng-container>

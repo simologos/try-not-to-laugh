@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
 import {UserService} from "../service/user.service";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-ranking',
@@ -14,7 +15,9 @@ export class RankingComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.ranking$ = this.userService.ranking();
+    this.ranking$ = this.userService.ranking().pipe(
+      map((res: any) => res.result.result),
+    );
   }
 
 }
