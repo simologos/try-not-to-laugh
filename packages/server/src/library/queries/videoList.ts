@@ -1,15 +1,13 @@
-
-import IVideo from "@tntl/definition/src/library/IVideo";
-import IIdentifier from "@tntl/definition/src/generic/IIdentifier";
-import { libraryModel } from "../repository/model";
-import IQueryResult from "../../_definition/rest/IQueryResult";
+import IVideo from '@tntl/definition/src/library/IVideo';
+import IIdentifier from '@tntl/definition/src/generic/IIdentifier';
+import { libraryModel } from '../repository/model';
+import IQueryResult from '../../_definition/rest/IQueryResult';
 
 export const listVideos = async (page: number, limit: number, userId: string)
 : Promise<IQueryResult<IVideo & IIdentifier>> => {
-
   try {
     const result = await libraryModel
-      .find({addedBy: userId})
+      .find({ addedBy: userId })
       .skip(page * limit)
       .limit(limit)
       .exec();
@@ -20,21 +18,20 @@ export const listVideos = async (page: number, limit: number, userId: string)
         limit,
         page,
         search: '',
-        result: result.map(e => ({
+        result: result.map((e) => ({
           id: e.id,
           name: e.name,
           url: e.url,
-          start: e.start
-        }))
-      }
-    }
-
+          start: e.start,
+        })),
+      },
+    };
   } catch (e) {
     return {
       success: false,
-      result: {      
-        error: e.message
-      }
-    }
+      result: {
+        error: e.message,
+      },
+    };
   }
-}
+};

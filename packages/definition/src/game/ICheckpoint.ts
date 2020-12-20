@@ -1,4 +1,4 @@
-import ICheckpointBase from "./ICheckpointBase";
+import ICheckpointBase from './ICheckpointBase';
 
 /**
  * Extension to the ICheckpointBase model used to
@@ -8,8 +8,8 @@ interface ICheckpoint extends ICheckpointBase {
 
   /**
    * Unique identifier for a user.
-   */  
+   */
   userId: string;
-};
+}
 
 export default ICheckpoint;

@@ -8,9 +8,9 @@ describe('ScoreComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScoreComponent ]
+      declarations: [ScoreComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

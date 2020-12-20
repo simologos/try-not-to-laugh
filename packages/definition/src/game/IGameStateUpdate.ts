@@ -1,4 +1,4 @@
-import GameState from "./GameState";
+import GameState from './GameState';
 
 /**
  * Data model used to update the state of a given game.

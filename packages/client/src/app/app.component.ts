@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     const cookie = this.getCookie('connect.sid');
 
     if (cookie) {
@@ -50,6 +49,6 @@ export class AppComponent implements OnInit {
     date.setTime(date.getTime() + (-1 * 24 * 60 * 60 * 1000));
 
     // Set it
-    document.cookie = name + '=; expires=' + date.toUTCString() + '; path=/';
+    document.cookie = `${name}=; expires=${date.toUTCString()}; path=/`;
   }
 }

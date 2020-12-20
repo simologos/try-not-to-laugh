@@ -10,4 +10,4 @@ type Command<T> = {
   id: string;
 };
 
-export { Command as Command };
+export { Command };

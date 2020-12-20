@@ -1,6 +1,6 @@
-import IOwnership from "../generic/IOwnership";
-import IVideo from "../library/IVideo";
-import ICheckpoint from "./ICheckpoint";
+import IOwnership from '../generic/IOwnership';
+import IVideo from '../library/IVideo';
+import ICheckpoint from './ICheckpoint';
 
 /**
  * Definition of a play list entry.

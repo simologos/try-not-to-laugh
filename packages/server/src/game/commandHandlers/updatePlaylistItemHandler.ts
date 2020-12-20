@@ -1,22 +1,20 @@
-import { Command } from "../../_definition/commands/Command";
-import { publishCommand, subscribe } from "../../commandPublisher"
-import { onPlaylistItemUpdated } from "../events";
-import { publishEvent } from "../../eventPublisher";
-import { getErrorEvent, getEventWithRecipients } from "../../_helpers/eventGenerator";
-import { startNextRound, updatePlaylistItem } from "../commands";
-import { gameModel } from "../repository/model";
-import IPlaylistUpdate from "@tntl/definition/src/game/IPlaylistUpdate";
-import { isValidUrl } from "../../_helpers/youTube";
-import { isValidName } from "../../_helpers/nameValidator";
-import IIdentifier from "@tntl/definition/src/generic/IIdentifier";
-import IPlaylistItem from "@tntl/definition/src/game/IPlaylistItem";
-import GameState from "@tntl/definition/src/game/GameState";
-import { serverSubmitterId } from "../../config";
+import IPlaylistUpdate from '@tntl/definition/src/game/IPlaylistUpdate';
+import IIdentifier from '@tntl/definition/src/generic/IIdentifier';
+import IPlaylistItem from '@tntl/definition/src/game/IPlaylistItem';
+import GameState from '@tntl/definition/src/game/GameState';
+import { Command } from '../../_definition/commands/Command';
+import { publishCommand, subscribe } from '../../commandPublisher';
+import { onPlaylistItemUpdated } from '../events';
+import { publishEvent } from '../../eventPublisher';
+import { getErrorEvent, getEventWithRecipients } from '../../_helpers/eventGenerator';
+import { startNextRound, updatePlaylistItem } from '../commands';
+import { gameModel } from '../repository/model';
+import { isValidUrl } from '../../_helpers/youTube';
+import { isValidName } from '../../_helpers/nameValidator';
+import { serverSubmitterId } from '../../config';
 
 const processCommand = async (command: Command<IPlaylistUpdate & IIdentifier>) => {
-
   try {
-
     if (!isValidName(command.payload.name)) {
       publishEvent(getErrorEvent('This is not a valid video name.', command));
       return;
@@ -35,24 +33,24 @@ const processCommand = async (command: Command<IPlaylistUpdate & IIdentifier>) =
     }
 
     if (game.state !== GameState.Active) {
-      publishEvent(getErrorEvent(`Cannot add a playlist item to a game which is not in state active.`, command));
+      publishEvent(getErrorEvent('Cannot add a playlist item to a game which is not in state active.', command));
       return;
     }
 
     if (game.players.indexOf(command.submitterId) === -1) {
-      publishEvent(getErrorEvent(`Cannot update the playlist because game is not joined.`, command));
+      publishEvent(getErrorEvent('Cannot update the playlist because game is not joined.', command));
       return;
     }
 
     const item = game.playlist.find((e: IPlaylistItem & IIdentifier) => e.id === command.payload.id);
 
     if (!item) {
-      publishEvent(getErrorEvent(`This playlist item could not be found.`, command));
+      publishEvent(getErrorEvent('This playlist item could not be found.', command));
       return;
     }
 
     if (item.addedBy.toString() !== command.submitterId) {
-      publishEvent(getErrorEvent(`This playlist item cannot be changed because it was not added by you.`, command));
+      publishEvent(getErrorEvent('This playlist item cannot be changed because it was not added by you.', command));
       return;
     }
 
@@ -67,15 +65,14 @@ const processCommand = async (command: Command<IPlaylistUpdate & IIdentifier>) =
         command,
         game.players,
         {
-          ...command.payload
-        }
-      )
+          ...command.payload,
+        },
+      ),
     );
 
     publishCommand(startNextRound({
-      id: game.id
+      id: game.id,
     }, serverSubmitterId));
-
   } catch (e) {
     publishEvent(getErrorEvent(e.message, command));
   }

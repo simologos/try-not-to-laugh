@@ -1,10 +1,9 @@
-
 export const isValidName = (name: string) => {
-  if(!name) {
+  if (!name) {
     return false;
   }
 
-  if(name.length > 200) {
+  if (name.length > 200) {
     return false;
   }
 

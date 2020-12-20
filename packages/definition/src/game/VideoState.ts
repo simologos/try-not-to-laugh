@@ -17,6 +17,6 @@ enum VideoState {
    * The video is watched.
    */
   Played
-};
+}
 
 export default VideoState;

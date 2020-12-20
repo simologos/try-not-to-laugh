@@ -8,9 +8,9 @@ describe('RoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RoundComponent ]
+      declarations: [RoundComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

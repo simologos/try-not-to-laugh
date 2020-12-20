@@ -1,17 +1,18 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormControl, FormGroup} from '@angular/forms';
-import {LibraryService} from '../service/library.service';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {
+  Component, OnInit, TemplateRef, ViewChild,
+} from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { LibraryService } from '../service/library.service';
 
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
-  styleUrls: ['./library.component.less']
+  styleUrls: ['./library.component.less'],
 })
 export class LibraryComponent implements OnInit {
-
   @ViewChild('modal') modalTemplate: TemplateRef<any> | undefined;
 
   videos$: Observable<any[]> | undefined;
@@ -20,7 +21,8 @@ export class LibraryComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private libraryService: LibraryService) {
+    private libraryService: LibraryService,
+  ) {
     this.formGroup = new FormGroup({
       name: new FormControl(''),
       url: new FormControl(''),
@@ -46,5 +48,4 @@ export class LibraryComponent implements OnInit {
   public remove(id: string): void {
     this.libraryService.delete(id);
   }
-
 }

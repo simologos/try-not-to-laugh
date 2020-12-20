@@ -1,33 +1,32 @@
-import { Command } from "../../_definition/commands/Command";
-import { subscribe } from "../../commandPublisher"
-import { onGameStateChanged } from "../events";
-import { publishEvent } from "../../eventPublisher";
-import { getErrorEvent, getEventWithRecipients } from "../../_helpers/eventGenerator";
-import { setGameState } from "../commands";
-import { gameModel } from "../repository/model";
-import GameState from "@tntl/definition/src/game/GameState";
-import IGameStateUpdate from "@tntl/definition/src/game/IGameStateUpdate";
-import { userModel } from "../../user/repository/model";
-import { Types } from "mongoose";
-import IExtendedPlayerList from "@tntl/definition/dist/game/IExtendedPlayerList";
+import GameState from '@tntl/definition/src/game/GameState';
+import IGameStateUpdate from '@tntl/definition/src/game/IGameStateUpdate';
+import { Types } from 'mongoose';
+import IExtendedPlayerList from '@tntl/definition/dist/game/IExtendedPlayerList';
+import { Command } from '../../_definition/commands/Command';
+import { subscribe } from '../../commandPublisher';
+import { onGameStateChanged } from '../events';
+import { publishEvent } from '../../eventPublisher';
+import { getErrorEvent, getEventWithRecipients } from '../../_helpers/eventGenerator';
+import { setGameState } from '../commands';
+import { gameModel } from '../repository/model';
+import { userModel } from '../../user/repository/model';
 
 const isTransitionValid = (currentState: GameState, nextState: GameState) => {
-  switch(currentState){
+  switch (currentState) {
     case GameState.Prepare:
-      return nextState === GameState.Active || 
-        nextState === GameState.Canceled;
+      return nextState === GameState.Active
+        || nextState === GameState.Canceled;
     case GameState.Active:
-      return nextState === GameState.Finished || 
-        nextState === GameState.Canceled;
+      return nextState === GameState.Finished
+        || nextState === GameState.Canceled;
     case GameState.Finished:
       return false;
     case GameState.Canceled:
       return false;
   }
-}
+};
 
 const processCommand = async (command: Command<IGameStateUpdate>) => {
-
   try {
     const game = await gameModel.findById(command.payload.id).exec();
 
@@ -36,29 +35,28 @@ const processCommand = async (command: Command<IGameStateUpdate>) => {
       return;
     }
 
-    if(!isTransitionValid(game.state, command.payload.state)){
+    if (!isTransitionValid(game.state, command.payload.state)) {
       publishEvent(getErrorEvent(`Cannot enter state ${GameState[command.payload.state]} from state ${GameState[game.state]}`, command));
       return;
     }
 
     game.state = command.payload.state;
 
-    if(command.payload.state === GameState.Finished) {
-
+    if (command.payload.state === GameState.Finished) {
       const results = {};
 
-      game.playlist.forEach(e => {
-        e.checkpoints.forEach(f => {
-          if(!f.laughed){
+      game.playlist.forEach((e) => {
+        e.checkpoints.forEach((f) => {
+          if (!f.laughed) {
             results[f.userId] = (results[f.userId] || 0) + 1;
           }
         });
       });
 
-      for(let i = 0, il = game.players.length; i < il; i++) {
+      for (let i = 0, il = game.players.length; i < il; i++) {
         if (results[game.players[i]]) {
           const user = await userModel.findById(game.players[i]).exec();
-          user.score = user.score + results[game.players[i]];
+          user.score += results[game.players[i]];
           await user.save();
         }
       }
@@ -67,15 +65,15 @@ const processCommand = async (command: Command<IGameStateUpdate>) => {
     await game.save();
 
     const players = await userModel.find({
-      '_id': {
-        $in: game.players.map(e => Types.ObjectId(e))
-      }
-    }).sort({'score': -1}).exec();
+      _id: {
+        $in: game.players.map((e) => Types.ObjectId(e)),
+      },
+    }).sort({ score: -1 }).exec();
 
     publishEvent(getEventWithRecipients<IGameStateUpdate & IExtendedPlayerList>(onGameStateChanged, command, game.players, {
       state: game.state,
       id: game.id,
-      users: players.map(e => ({
+      users: players.map((e) => ({
         id: e.id,
         avatar: e.avatar,
         displayName: e.displayName,
@@ -83,14 +81,12 @@ const processCommand = async (command: Command<IGameStateUpdate>) => {
         googleId: e.googleId,
         isValidated: e.isValidated,
         lastName: e.lastName,
-        score: e.score
-      }))
+        score: e.score,
+      })),
     }));
-
   } catch (e) {
     publishEvent(getErrorEvent(e.message, command));
   }
-
 };
 
 export const registerSetGameStateHandler = () => {

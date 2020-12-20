@@ -1,7 +1,6 @@
 import IEventCreator from './IEventCreator';
 
 export function eventCreator<P>(type: string): IEventCreator<P> {
-
   return Object.assign(
     (payload: P, submitterId: string, startTimestamp: number, recipients: string[], id: string) => ({
       type,
@@ -10,8 +9,8 @@ export function eventCreator<P>(type: string): IEventCreator<P> {
       recipients,
       id,
       duration: new Date().getTime() - startTimestamp,
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
     }),
-    {type}
+    { type },
   ) as IEventCreator<P>;
-};
+}

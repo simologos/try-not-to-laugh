@@ -12,7 +12,7 @@ interface IPaginatedRequest {
    * The page number to query.
    */
   page: number;
-  
+
   /**
    * The number of records per page.
    */

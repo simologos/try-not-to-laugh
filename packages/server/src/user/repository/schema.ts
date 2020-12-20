@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema } from 'mongoose';
 
 const schema = new Schema({
   displayName: { type: String, required: true },
@@ -7,7 +7,7 @@ const schema = new Schema({
   avatar: { type: String, required: false },
   googleId: { type: String, required: false },
   isValidated: { type: Boolean, required: true },
-  score: { type: Number, required: true }
+  score: { type: Number, required: true },
   // expireAt: {type: Date, required: true }
 }, { _id: true });
 
