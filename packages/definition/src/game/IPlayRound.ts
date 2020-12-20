@@ -15,7 +15,7 @@ interface IPlayRound {
   /**
    * List of playlist items which are part of the current play round.
    */
-  playlist: IVideo & IOwnership[];
+  playlist: (IVideo & IOwnership)[];
 }
 
 export default IPlayRound;
