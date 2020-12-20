@@ -30,9 +30,9 @@ export class RoundPrepareComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.videos$ = this.libraryService.getVideos().pipe(
+    this.videos$ = this.libraryService.getVideos().pipe(
       map((res: any) => res.result.result),
-    );*/
+    );
   }
 
   public submitVideo(): void {

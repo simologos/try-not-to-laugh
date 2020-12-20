@@ -26,8 +26,8 @@ export class LibraryService {
     this.http.post<any>(BASE_URL, video).subscribe();
   }
 
-  public getVideos(): void {
-    this.videos = this.http.get<any[]>(BASE_URL).subscribe();
+  public getVideos(): Observable<any> {
+    return this.http.get<any[]>(BASE_URL);
   }
 
   public delete(id: string): void {
