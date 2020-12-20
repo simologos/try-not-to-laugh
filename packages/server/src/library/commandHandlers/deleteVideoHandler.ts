@@ -10,10 +10,9 @@ import { libraryModel } from "../repository/model";
 const processCommand = async (command: Command<IIdentifier>) => {
   
   try{
-    const result = await libraryModel.remove(command.payload).exec();
+    const result = await libraryModel.findByIdAndRemove(command.payload.id).exec();
 
-    if(!result.ok) {
-    
+    if(!result) {
       publishEvent(getErrorEvent('Could not delete', command));
     
       return;
