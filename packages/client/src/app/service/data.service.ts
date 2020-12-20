@@ -25,6 +25,8 @@ export class DataService {
 
   playerCount = 0;
 
+  playerRoundReady = false;
+
   chat: IChatMessage[] = [];
 
   playlist: any[] = [];
@@ -114,7 +116,11 @@ export class DataService {
           break;
 
         case 'ON_VIDEO_ADDED':
-          // TODO trigger playlist reload
+          this.libraryService.getVideos();
+          break;
+
+        case 'ON_VIDEO_DELETED':
+          this.libraryService.getVideos();
           break;
 
         case 'ON_ERROR':

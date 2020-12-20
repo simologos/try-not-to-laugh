@@ -29,9 +29,10 @@ export class LibraryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.videos$ = this.libraryService.getVideos().pipe(
+    /*this.videos$ = this.libraryService.videos?.pipe(
       map((res: any) => res.result.result),
-    );
+    );*/
+
   }
 
   public add(): void {

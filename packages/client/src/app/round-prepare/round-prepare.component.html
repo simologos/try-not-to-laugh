@@ -16,8 +16,8 @@ Start: <input type="number" [(ngModel)]="start"/> <br>
   <div class="modal-body" style="padding: 2em;">
     <table class="table table-striped table-responsive">
       <thead>
-      <th>Name</th>
-      <th>Url</th>
+        <th>Name</th>
+        <th>Url</th>
       </thead>
       <ng-container *ngIf="videos$ | async as videos">
         <ng-container *ngFor="let video of videos">
