@@ -27,8 +27,6 @@
     "@angular/youtube-player": "^11.0.3",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
     "@tensorflow/tfjs-node": "^2.7.0",
-    "@tntl/definition": "^1.0.0",
-    "@types/babel__core": "^7.1.10",
     "bootstrap": "^4.5.3",
     "canvas": "^2.6.1",
     "face-api.js": "^0.22.2",
@@ -42,6 +40,8 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
+    "@types/babel__core": "^7.1.10",
+    "@tntl/definition": "^1.0.0",
     "@angular-devkit/build-angular": "~0.1100.4",
     "@angular/cli": "~11.0.4",
     "@angular/compiler-cli": "~11.0.4",
