@@ -22,6 +22,7 @@ import { RoundComponent } from './round/round.component';
 import { PlayersComponent } from './players/players.component';
 import { LibraryComponent } from './library/library.component';
 import { ScoreComponent } from './score/score.component';
+import { RankingComponent } from './ranking/ranking.component';
 
 const config: SocketIoConfig = { url: '/notification', options: {} };
 
@@ -40,6 +41,7 @@ const config: SocketIoConfig = { url: '/notification', options: {} };
     PlayersComponent,
     LibraryComponent,
     ScoreComponent,
+    RankingComponent,
   ],
   imports: [
     BrowserModule,

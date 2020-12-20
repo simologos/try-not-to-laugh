@@ -6,6 +6,7 @@ import { LandingComponent } from './landing/landing.component';
 import { LobbyComponent } from './lobby/lobby.component';
 import { LibraryComponent } from './library/library.component';
 import { ScoreComponent } from './score/score.component';
+import {RankingComponent} from "./ranking/ranking.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'lobby/:id', component: LobbyComponent },
   { path: 'library', component: LibraryComponent },
   { path: 'score', component: ScoreComponent },
+  { path: 'ranking', component: RankingComponent },
   { path: '', component: LandingComponent },
 ];
 

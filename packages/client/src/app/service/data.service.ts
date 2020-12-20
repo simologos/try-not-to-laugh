@@ -96,7 +96,7 @@ export class DataService {
             this.router.navigate(['/game', this.gameId]);
           }
           if (this.state === 2) {
-            event.payload.users.forEach( (u) => {
+            event.payload.users.forEach( (u: any) => {
               this.scores.set(u.id, u.score);
             });
 

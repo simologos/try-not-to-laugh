@@ -1,0 +1,16 @@
+<div class="align-content-center">
+  <table class="table table-striped table-responsive">
+    <thead>
+    <th>Username</th>
+    <th>Score</th>
+    </thead>
+    <ng-container *ngIf="ranking$ | async as rankings">
+      <ng-container *ngFor="let ranking of rankings">
+        <tr>
+          <td>{{ranking.name}}</td>
+          <td>{{ranking.score}}</td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </table>
+</div>
