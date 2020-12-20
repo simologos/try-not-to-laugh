@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Router } from '@angular/router';
 import IUser from '@tntl/definition/src/user/IUser';
+import IIdentifier from '@tntl/definition/src/generic/IIdentifier';
 import IChatMessage from '@tntl/definition/src/game/IChatMessage';
 import IVideo from '@tntl/definition/src/library/IVideo';
 import { GameService } from './game.service';
@@ -96,7 +97,7 @@ export class DataService {
             this.router.navigate(['/game', this.gameId]);
           }
           if (this.state === 2) {
-            event.payload.users.forEach( (u: any) => {
+            event.payload.users.forEach((u: IUser & IIdentifier) => {
               this.scores.set(u.id, u.score);
             });
 

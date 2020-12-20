@@ -23,6 +23,7 @@ import { isType } from '../_definition/isType';
 import { onUserAdded } from './events';
 import { publishCommand } from '../commandPublisher';
 import { isAuthenticated } from '../_middleware/authMiddleware';
+import { listUsers } from './queries/userList';
 
 use(
   new GoogleStrategy(
@@ -161,6 +162,27 @@ export const registerRestEndpoints = (app: Express, socketNs: SocketIO.Namespace
       res.end(JSON.stringify(result));
     },
   );
+
+  app.get('/v1/users', isAuthenticated, jsonParser, async (req: Request, res: Response) => {
+    const { page, limit } = req.body;
+
+    res.setHeader('Content-Type', 'application/json');
+
+    const result = await listUsers(
+      parseInt(page, 10) || 0,
+      parseInt(limit, 10) || 10,
+      // @ts-ignore
+      req.session.passport.user,
+    );
+
+    if (result.success) {
+      res.status(StatusCodes.OK);
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+
+    res.end(JSON.stringify(result));
+  });
 };
 
 const initModule = (app: Express, socketNs: SocketIO.Namespace) => {
