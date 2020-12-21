@@ -18,6 +18,6 @@ export const sessionSecret = process.env.SESSION_SECRET;
 
 export const maxPlayerPerGame = 4;
 export const minPlayerPerGame = 2;
-export const roundsPerGame = 2;
+export const roundsPerGame = 5;
 
 export const serverSubmitterId = 'tntlServer';

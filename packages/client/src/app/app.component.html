@@ -10,7 +10,7 @@
         <li><a routerLink="/" routerLinkActive="active">Home</a></li>
         <li><a routerLink="/lobby" *ngIf="loggedin" routerLinkActive="active">Lobby</a></li>
         <li><a routerLink="/library" *ngIf="loggedin" routerLinkActive="active">Library</a></li>
-        <li><a routerLink="/ranking" routerLinkActive="active">Ranking</a></li>
+        <li><a routerLink="/ranking" *ngIf="loggedin" routerLinkActive="active">Ranking</a></li>
         <li><a (click)="logout()" *ngIf="loggedin" routerLinkActive="active">Logout</a></li>
       </ul>
     </div>
